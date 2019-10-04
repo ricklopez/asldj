@@ -8,6 +8,22 @@ TODO: Guide users through getting your code up and running on their own system. 
 3.	Latest releases
 4.	API references
 
+
+## APP (Web Client)
+App is React Redux application using the `create-react-app` tool kit. [See Instructions for local and prod builds here](https://create-react-app.dev/docs/getting-started) 
+#### Dev 
+`cd App`
+`npm install`
+`npm start`
+
+#### Prod
+`npm run build`
+
+#### Notes
+- [Deploying to S3](https://medium.com/serverlessguru/deploy-reactjs-app-with-s3-static-hosting-f640cb49d7e6)
+
+This script creates a production build of the project
+[See Notes Here](https://create-react-app.dev/docs/deployment)
 # Build and Test
 TODO: Describe and show how to build your code and run the tests. 
 
