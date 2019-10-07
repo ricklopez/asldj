@@ -32,30 +32,39 @@ export function fetchPeriodMappings(data) {
     };
 }
 
-export function createMigration(data, callback) {
-    if(data.tasks === undefined){
-        data.tasks = data.tasks;
-    }
-    const tasks = [];
-    data.tasks.forEach((t) => {
-        tasks.push({name: t, complete: false});
-    });
+export function createMigration(
+    {name, sourceHostName, sourceDB, sourceSchema, sourceXMLCount, destHostName, destDB, destSchema, destXMLCount, phase, targetDate, complete   },
+    callback) {
+    debugger;
+    // if(data.tasks === undefined){
+    //     data.tasks = data.tasks;
+    // }
+    // const tasks = [];
+    // data.tasks.forEach((t) => {
+    //     tasks.push({name: t, complete: false});
+    // });
+
+
     const reqPromise = axios.post(env.MIGRATIONS_URL,{
-        applicant: { name: data.applicant, company: data.applicant + " Industries"},
-        type: data.type,
-        title: data.title,
-        funder: data.funder,
-        amount: data.amount,
-        paymentAmount: data.payment,
-        term: data.term,
-        tasks: tasks
-    })
-        .then(() => callback());
+        name,
+        sourceHostName,
+        sourceDB,
+        sourceSchema,
+        sourceXMLCount,
+        destHostName,
+        destDB,
+        destSchema,
+        destXMLCount,
+        phase,
+        targetDate,
+        complete
+    });
 
     return {
         type: types.CREATE_MIGRATION,
         payload: reqPromise
     };
+
 }
 
 export function fetchMigration(id) {

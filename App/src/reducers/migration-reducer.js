@@ -25,6 +25,9 @@ export default function(state = [], action) {
             }
 
         case CREATE_MIGRATION:
+            console.log(action);
+            debugger;
+
             return state;
 
         default:

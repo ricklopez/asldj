@@ -52,8 +52,10 @@ class MigrationRequestNew extends Component {
     onSubmit(values) {
         console.log( "Form Values");
         console.log(values);
-        this.props.createLoanRequest(values, () => {
-            this.props.history.push('/dashboard');
+        this.props.createLoanRequest(values, (r) => {
+            console.log("Response");
+            console.log(r);
+            //this.props.history.push('/dashboard');
         });
     }
 
