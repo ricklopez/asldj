@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import { fetchMigration, fetchLOBMappings, fetchPeriodMappings } from '../actions/migration-actions';
-import { completeTask } from '../actions/task-actions';
+import { completeTask, createStandUpDB } from '../actions/task-actions';
 import AppHeader from '../components/header';
 import loadingImg from '../assets/loading-one.gif';
 import Task from '../components/details-task.js';
@@ -35,6 +35,8 @@ class MigrationDetails extends Component {
     constructor(props) {
         super(props);
         this.onTaskClick = this.onTaskClick.bind(this);
+        this.onStandUp = this.onStandUp.bind(this);
+        this.onNotify = this.onNotify.bind(this);
     }
 
     componentDidMount() {
@@ -42,6 +44,7 @@ class MigrationDetails extends Component {
         this.props.fetchMigration(id);
         this.props.fetchLOBMappings(id);
         this.props.fetchPeriodMappings(id);
+
     }
 
     onTaskClick(event) {
@@ -51,6 +54,22 @@ class MigrationDetails extends Component {
             taskId: event.target.dataset.id,
             completed: true
         });
+    }
+
+    onStandUp(event) {
+        const { id } = this.props.match.params;
+        this.props.createStandUpDB( id, (r) => {
+            console.log("Response");
+            console.log(r);
+            //TODO: Edit Migration and Phase 1 complete
+            this.props.completeTask({id: r.data.migrationId, phase: 1});
+            this.props.history.push(`/migration/details/${r.data.migrationId}`);
+        });
+        console.log(event);
+    }
+
+    onNotify(event) {
+        console.log(event);
     }
 
     renderTasks() {
@@ -121,20 +140,20 @@ class MigrationDetails extends Component {
                                 </div>
                                 <div className="col">
                                     <div className="text-xs-right">
-                                        <Link className="btn btn-outline-info float-right mr-2" to="/migration/new">
+                                        <button className="btn btn-outline-info float-right mr-2" onClick={this.onStandUp}>
                                             Stand Up
-                                        </Link>
-                                        <Link className="btn btn-outline-info float-right mr-2" to="/migration/new">
+                                        </button>
+                                        <button className="btn btn-outline-info float-right mr-2" onClick={this.onNotify}>
                                             Notify Team
-                                        </Link>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                             <div className="card" style={divStyle}>
                                 <div className="card-body">
                                     <h4 className="card-title">Summary</h4>
-                                    <h6 className="card-subtitle mb-2 text-muted">Overall</h6>
-                                    <p className="card-text"> <strong>Progress: </strong> 0%</p>
+                                    <h6 className="card-subtitle mb-2 text-muted">Phase One</h6>
+                                    <p className="card-text"> <strong>Progress: </strong> {migration.phase === 1 ? "Complete" : "Not Started"}</p>
                                     <p className="card-text"> Status: Not Started</p>
                                     <h6 className="card-subtitle mb-2 text-muted">DBE Approval</h6>
                                     <p className="card-text"> <strong>Progress: </strong> 0%</p>
@@ -147,7 +166,9 @@ class MigrationDetails extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="row mt-5">
+                    {this.props.migration.phase !== 0 ?
+                        (<div>
+                            <div className="row mt-5">
                         <div className="col">
                             <h2> Mappings</h2>
                         </div>
@@ -213,15 +234,17 @@ class MigrationDetails extends Component {
                             </div>
                         </div>
                     </div>
+                        </div>)
+                        : (<div></div>)}
                 </div>
             </div>
         );
     }
 }
 
-function mapStateToProps({ migrations, lobMappings, periodsMappings }, ownProps) {
+function mapStateToProps({ migration, lobMappings, periodsMappings }, ownProps) {
     return {
-        migration: migrations[ownProps.match.params.id],
+        migration: migration,
         lobs: lobMappings,
         periods: periodsMappings
     };
@@ -233,7 +256,8 @@ function mapDispatchToProps(dispatch){
             fetchMigration,
             fetchLOBMappings,
             fetchPeriodMappings,
-            completeTask
+            completeTask,
+            createStandUpDB
         }, dispatch);
 }
 

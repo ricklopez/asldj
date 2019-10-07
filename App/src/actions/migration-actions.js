@@ -13,7 +13,7 @@ export function fetchMigrations(data) {
 
 
 export function fetchLOBMappings(data) {
-    const reqPromise = axios.get(env.LOB_MAPPINGS_URL);
+    const reqPromise = axios.get(`${env.MIGRATIONS_URL}/${data}/lob-mappings`);
 
 
     return {

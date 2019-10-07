@@ -22,11 +22,11 @@ export function* loadMigrationRequestSaga() {
         console.log("Migration:", migration);
 
         // Step 3 Take TASK_COMPLETED then take action if a dependency
-        const newTasksState = yield take(types.TASK_COMPLETED);
-        const taskB = newTasksState.payload.data[migration.id - 1].tasks[1];
-        console.log("New Task State:", newTasksState.payload.data[migration.id - 1]);
-        console.log("Task B:", taskB);
-        if (taskB.complete === true)
+        const newTasksState = yield take(types.STANDUP_DB);
+        //const taskB = newTasksState.payload.data[migration.id - 1].tasks[1];
+        console.log("New Task State:", newTasksState);
+        //console.log("Task B:", taskB);
+        if (newTasksState)
             window.alert("Task C Now Enabled");
     } catch(error) {
         yield console.log("Fetch_Failed", error);//put({type: 'FETCH_FAILED', error});

@@ -5,4 +5,5 @@ export const FETCH_PERIODS_MAPPINGS = 'Fetch_Periods_Mappings';
 export const FETCH_DEST_LOBS = 'Fetch_Dest_Lobs';
 export const CREATE_MIGRATION = 'Create_Loan_Request';
 export const FETCH_MIGRATION = 'Fetch_Loan';
-export const TASK_COMPLETED = 'Task_Completed';
+export const STANDUP_DB = 'StandUp_DB';
+export const UPDATE_MIGRATION = 'Update_Migration';
