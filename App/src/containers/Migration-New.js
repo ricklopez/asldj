@@ -55,7 +55,7 @@ class MigrationRequestNew extends Component {
         this.props.createLoanRequest(values, (r) => {
             console.log("Response");
             console.log(r);
-            //this.props.history.push('/dashboard');
+            this.props.history.push(`/migration/details/${r.data.id}`);
         });
     }
 

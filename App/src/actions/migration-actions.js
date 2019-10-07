@@ -35,7 +35,6 @@ export function fetchPeriodMappings(data) {
 export function createMigration(
     {name, sourceHostName, sourceDB, sourceSchema, sourceXMLCount, destHostName, destDB, destSchema, destXMLCount, phase, targetDate, complete   },
     callback) {
-    debugger;
     // if(data.tasks === undefined){
     //     data.tasks = data.tasks;
     // }
@@ -58,7 +57,7 @@ export function createMigration(
         phase,
         targetDate,
         complete
-    });
+    }) .then(r => callback(r));
 
     return {
         type: types.CREATE_MIGRATION,
