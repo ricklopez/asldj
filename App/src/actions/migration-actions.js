@@ -23,7 +23,7 @@ export function fetchLOBMappings(data) {
 }
 
 export function fetchPeriodMappings(data) {
-    const reqPromise = axios.get(env.PERIOD_MAPPINGS_URL);
+    const reqPromise = axios.get(`${env.MIGRATIONS_URL}/${data}/period-mappings`);
 
 
     return {

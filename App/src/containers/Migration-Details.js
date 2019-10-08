@@ -11,12 +11,36 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import _ from 'lodash';
+import NameCellRenderer from '../components/nameCellRenderer';
 
+function getCharCodeFromEvent(event) {
+    event = event || window.event;
+    return (typeof event.which == "undefined") ? event.keyCode : event.which;
+}
+
+function isCharNumeric(charStr) {
+    return !!/\d/.test(charStr);
+}
+
+function isKeyPressedNumeric(event) {
+    var charCode = getCharCodeFromEvent(event);
+    var charStr = String.fromCharCode(charCode);
+    return isCharNumeric(charStr);
+}
+
+// simple function cellRenderer, just returns back the name of the country
+function CountryCellRenderer(params) {
+    return params.value.name;
+}
 
 const columnsLOB = [
     { field: 'id', headerName: 'ID', sortable: true, filter: true},
-    { field: 'migrationId', headerName: 'Migration Id', sortable: true, filter: true, editable:true},
+    { field: 'migrationId', headerName: 'Migration Id', sortable: true, filter: true},
     { field: 'clientLOB', headerName: 'Client LOB', sortable: true, filter: true},
+    {
+        field: 'catalystLOB',
+        headerName: 'Catalyst LOB',
+        cellRendererFramework: NameCellRenderer},
     { field: 'clientCoverage', headerName: 'Client Coverage', sortable: true, filter: true, editable:true},
     { field: 'displayName', headerName: 'Display Name', sortable: true, filter: true},
     { field: 'countOfClientRows', headerName: 'Count Client Rows', sortable: true, filter: true},
@@ -31,17 +55,21 @@ const columnsPeriods = [
     { field: 'createdAt', headerName: 'Created', sortable: true, filter: true, editable:true}
 ];
 
+// create your cellRenderer as a React component
+
 class MigrationDetails extends Component {
     constructor(props) {
         super(props);
         this.onTaskClick = this.onTaskClick.bind(this);
         this.onStandUp = this.onStandUp.bind(this);
         this.onNotify = this.onNotify.bind(this);
+        this.CountryCellRenderer = this.CountryCellRenderer.bind(this);
     }
 
     componentDidMount() {
         const { id } = this.props.match.params;
         this.props.fetchMigration(id);
+
         this.props.fetchLOBMappings(id);
         this.props.fetchPeriodMappings(id);
 
@@ -70,6 +98,11 @@ class MigrationDetails extends Component {
 
     onNotify(event) {
         console.log(event);
+    }
+
+    CountryCellRenderer(params) {
+        console.log(params);
+        return params.value.name;
     }
 
     renderTasks() {
@@ -200,7 +233,8 @@ class MigrationDetails extends Component {
                                             pagination= {true}
                                             onRowClicked= {(e) => {
                                                 console.log(e);
-                                            } }>
+                                            } }
+                                            >
                                         </AgGridReact>
                                     </div>
                                 </div>
