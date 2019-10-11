@@ -139,7 +139,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        fetchMigrations
+        fetchMigrations,
     }, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

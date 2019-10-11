@@ -11,7 +11,7 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import _ from 'lodash';
-import NameCellRenderer from '../components/nameCellRenderer';
+import NameCellRenderer from '../components/renderers/nameCellRenderer';
 
 function getCharCodeFromEvent(event) {
     event = event || window.event;
@@ -36,7 +36,7 @@ function CountryCellRenderer(params) {
 const columnsLOB = [
     { field: 'id', headerName: 'ID', sortable: true, filter: true},
     { field: 'migrationId', headerName: 'Migration Id', sortable: true, filter: true},
-    { field: 'clientLOB', headerName: 'Client LOB', sortable: true, filter: true},
+    { field: 'clientLOB', headerName: 'Client LOB', sortable: true, filter: true, actions:completeTask },
     {
         field: 'catalystLOB',
         headerName: 'Catalyst LOB',
@@ -231,9 +231,11 @@ class MigrationDetails extends Component {
                                             columnDefs={columnsLOB}
                                             rowData={this.props.lobs}
                                             pagination= {true}
-                                            onRowClicked= {(e) => {
-                                                console.log(e);
-                                            } }
+                                            deltaRowDataMode={true}
+                                            // return id required for tree data and delta updates
+                                            treeData={true}
+                                            getRowNodeId={data => data.id}
+                                            onCellValueChanged={this.onCellValueChanged}
                                             >
                                         </AgGridReact>
                                     </div>
@@ -258,7 +260,11 @@ class MigrationDetails extends Component {
                                             columnDefs={columnsPeriods}
                                             rowData={this.props.periods}
                                             pagination= {true}
-                                            onRowClicked= {(e) => {
+                                            deltaRowDataMode={true}
+                                            // return id required for tree data and delta updates
+                                            treeData={true}
+                                            getRowNodeId={data => data.id}
+                                            onCellValueChanged= {(e) => {
                                                 console.log(e);
                                             } }
                                             >
@@ -274,7 +280,17 @@ class MigrationDetails extends Component {
             </div>
         );
     }
+
+    onCellValueChanged = (event) => {
+
+
+        console.log(event);
+        this.props.completeTask({id:1});
+    };
+
 }
+
+
 
 function mapStateToProps({ migration, lobMappings, periodsMappings }, ownProps) {
     return {

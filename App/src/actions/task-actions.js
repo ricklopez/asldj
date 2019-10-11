@@ -8,6 +8,8 @@ export function completeTask(data) {
         phase: data.phase
     });
 
+    console.log(data);
+
     return {
         type: types.UPDATE_MIGRATION,
         payload: reqPromise

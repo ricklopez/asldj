@@ -19,10 +19,11 @@ import reducers from './reducers';
 import rootSaga from './sagas/index';
 import * as serviceWorker from './serviceWorker';
 
-const sagaMiddleware = createSagaMiddleware();
 
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(reducers,composeWithDevTools(applyMiddleware(ReduxPromise, sagaMiddleware)));
 ReactDOM.render(
-    <Provider store={createStore(reducers,composeWithDevTools(applyMiddleware(ReduxPromise, sagaMiddleware)))}>
+    <Provider store={store}>
         {/*<Provider store={createStoreWithMiddleware(reducers)}>*/}
         <BrowserRouter>
             <div>
@@ -30,7 +31,7 @@ ReactDOM.render(
                     <Route path="/migration/details/:id" component={MigrationDetails} />
                     <Route path="/migration/new" component={MigrationNew} />
                     <Route path="/migrations" component={MigrationAll} />
-                    <Route path="/dashboard" component={Dashboard} />
+                    <Route path="/dashboard" component={Dashboard} store={store}/>
                     <Route exact path="/" component={SignIn} />
                 </Switch>
             </div>
