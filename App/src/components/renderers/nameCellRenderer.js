@@ -56,11 +56,11 @@ export default class NameCellRenderer extends Component {
     render() {
 
         const optionsList = this.state.lobs.map((item) => {
-            return <option key={item.id} value={item.id}>{item.id}</option>
+            return <option key={item.id} value={item.code}>{item.lob}</option>
         });
 
         return (
-            <select value={this.state.value} onChange={this.onChange}>
+            <select value={this.props.value} onChange={this.onChange}>
                 {optionsList}
             </select>
         );

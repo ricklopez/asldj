@@ -16,6 +16,18 @@ export function completeTask(data) {
     };
 }
 
+
+export function updateLobMapping(data) {
+    const reqPromise = axios.put(`${env.MIGRATION_URL}/${data.migrationId}/lob-mappings/${data.id}`, data);
+
+    console.log(data);
+
+    return {
+        type: types.UPDATE_LOB_MAPPING,
+        payload: reqPromise
+    };
+}
+
 export function createStandUpDB(migrationId, callback) {
 
 

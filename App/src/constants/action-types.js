@@ -7,3 +7,4 @@ export const CREATE_MIGRATION = 'Create_Loan_Request';
 export const FETCH_MIGRATION = 'Fetch_Loan';
 export const STANDUP_DB = 'StandUp_DB';
 export const UPDATE_MIGRATION = 'Update_Migration';
+export const UPDATE_LOB_MAPPING = 'Update_LOB_Mapping';

@@ -1,4 +1,4 @@
-import { FETCH_MIGRATIONS, FETCH_MIGRATION, CREATE_MIGRATION, TASK_COMPLETED, FETCH_LOB_MAPPINGS } from '../constants/action-types';
+import { UPDATE_LOB_MAPPING, FETCH_MIGRATIONS, FETCH_MIGRATION, CREATE_MIGRATION, TASK_COMPLETED, FETCH_LOB_MAPPINGS } from '../constants/action-types';
 // import objectAssign from 'object-assign';
 import _ from 'lodash';
 
@@ -13,6 +13,8 @@ export default function(state = [], action) {
             } else {
                 return state;
             }
+        case UPDATE_LOB_MAPPING:
+            return state;
 
         default:
             return state;

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import { fetchMigration, fetchLOBMappings, fetchPeriodMappings } from '../actions/migration-actions';
-import { completeTask, createStandUpDB } from '../actions/task-actions';
+import { completeTask, updateLobMapping, createStandUpDB } from '../actions/task-actions';
 import AppHeader from '../components/header';
 import loadingImg from '../assets/loading-one.gif';
 import Task from '../components/details-task.js';
@@ -176,9 +176,7 @@ class MigrationDetails extends Component {
                                         <button className="btn btn-outline-info float-right mr-2" onClick={this.onStandUp}>
                                             Stand Up
                                         </button>
-                                        <button className="btn btn-outline-info float-right mr-2" onClick={this.onNotify}>
-                                            Notify Team
-                                        </button>
+
                                     </div>
                                 </div>
                             </div>
@@ -207,9 +205,7 @@ class MigrationDetails extends Component {
                         </div>
                         <div className="col">
                             <div className="text-xs-right">
-                                <Link className="btn btn-outline-info float-right" to="/migration/edit/1">
-                                    New Mapping
-                                </Link>
+
                             </div>
                         </div>
                         <hr/>
@@ -282,10 +278,8 @@ class MigrationDetails extends Component {
     }
 
     onCellValueChanged = (event) => {
-
-
-        console.log(event);
-        this.props.completeTask({id:1});
+        console.log({...event.data});
+        this.props.updateLobMapping({...event.data});
     };
 
 }
@@ -306,6 +300,7 @@ function mapDispatchToProps(dispatch){
             fetchMigration,
             fetchLOBMappings,
             fetchPeriodMappings,
+            updateLobMapping,
             completeTask,
             createStandUpDB
         }, dispatch);

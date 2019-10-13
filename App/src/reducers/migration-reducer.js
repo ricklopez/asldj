@@ -12,13 +12,11 @@ export default function(state = {}, action) {
 
         case UPDATE_MIGRATION:
             console.log(action);
-            debugger;
 
             return action.payload.data;
 
         case STANDUP_DB:
             console.log(action);
-            debugger;
 
             return state;
 
