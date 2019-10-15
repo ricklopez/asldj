@@ -11,6 +11,7 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import _ from 'lodash';
+import moment from 'moment';
 import NameCellRenderer from '../components/renderers/nameCellRenderer';
 
 function getCharCodeFromEvent(event) {
@@ -34,25 +35,21 @@ function CountryCellRenderer(params) {
 }
 
 const columnsLOB = [
-    { field: 'id', headerName: 'ID', sortable: true, filter: true},
     { field: 'migrationId', headerName: 'Migration Id', sortable: true, filter: true},
-    { field: 'clientLOB', headerName: 'Client LOB', sortable: true, filter: true, actions:completeTask },
+    { field: 'evolutionLOB', headerName: 'Client LOB', sortable: true, filter: true, actions:completeTask },
     {
         field: 'catalystLOB',
         headerName: 'Catalyst LOB',
         cellRendererFramework: NameCellRenderer},
-    { field: 'clientCoverage', headerName: 'Client Coverage', sortable: true, filter: true, editable:true},
+    { field: 'evolutionCoverage', headerName: 'Client Coverage', sortable: true, filter: true, editable:true},
     { field: 'displayName', headerName: 'Display Name', sortable: true, filter: true},
     { field: 'countOfClientRows', headerName: 'Count Client Rows', sortable: true, filter: true},
-    { field: 'createdAt', headerName: 'Created', sortable: true, filter: true, editable:true}
 ];
 
 const columnsPeriods = [
-    { field: 'id', headerName: 'ID', sortable: true, filter: true},
     { field: 'migrationId', headerName: 'Migration Id', sortable: true, filter: true, editable:true},
-    { field: 'clientPeriod', headerName: 'Client Period', sortable: true, filter: true},
+    { field: 'evolutionPeriod', headerName: 'Client Period', sortable: true, filter: true},
     { field: 'catalystPeriod', headerName: 'Catalyst Period', sortable: true, filter: true, editable:true},
-    { field: 'createdAt', headerName: 'Created', sortable: true, filter: true, editable:true}
 ];
 
 // create your cellRenderer as a React component
@@ -87,11 +84,8 @@ class MigrationDetails extends Component {
     onStandUp(event) {
         const { id } = this.props.match.params;
         this.props.createStandUpDB( id, (r) => {
-            console.log("Response");
-            console.log(r);
-            //TODO: Edit Migration and Phase 1 complete
             this.props.completeTask({id: r.data.migrationId, phase: 1});
-            this.props.history.push(`/migration/details/${r.data.migrationId}`);
+            this.props.history.push(`/migration/${r.data.migrationId}`);
         });
         console.log(event);
     }
@@ -154,12 +148,20 @@ class MigrationDetails extends Component {
                             </div>
                             <div className="card" style={divStyle}>
                                 <div className="card-body">
-                                    <h4 className="card-title">{migration.name ? migration.name : ''}</h4>
-                                    <h6 className="card-subtitle mb-2 text-muted">{migration.type ? migration.type : ''}</h6>
+                                    <h4 className="card-title">{migration.migrationName ? migration.migrationName : ''}</h4>
+                                    <h6 className="card-subtitle mb-2 text-muted">Migration Type:  {migration.migrationTypeID ? migration.migrationTypeID : ''}</h6>
                                     <p className="card-text"> <strong>Source Host: </strong> {migration.sourceHostName}</p>
-                                    <p className="card-text"> <strong>Source DB: </strong> {migration.sourceDB}</p>
-                                    <p className="card-text"> <strong>Source Schema: </strong> {migration.sourceSchema}</p>
-                                    <p className="card-text"> <strong>Source XML Count: </strong> {migration.sourceXMLCount}</p>
+                                    <p className="card-text"> <strong>Source DB: </strong> {migration.sourceDb}</p>
+                                        <p className="card-text"> <strong>Source Schema: </strong> {migration.sourceSchema}</p>
+                                    <p className="card-text"> <strong>Source XML Count: </strong> {migration.sourceXmlCount}</p>
+                                    <p className="card-text"> <strong>Dest Host: </strong> {migration.destDbHostName}</p>
+                                    <p className="card-text"> <strong>Dest DB: </strong> {migration.destDb}</p>
+                                    <p className="card-text"> <strong>Dest Schema: </strong> {migration.destSchema}</p>
+                                    <p className="card-text"> <strong>Dest QQ Id: </strong> {migration.destQqID}</p>
+                                    <p className="card-text"> <strong>Agency Phone: </strong> {migration.agencyPhoneLine}</p>
+                                    <p className="card-text"> <strong>Agency Email: </strong> {migration.agencyEmailLine}</p>
+                                    <p className="card-text"> <strong>CSR Notes: </strong> {migration.csrNotes}</p>
+
                                     <hr/>
                                     <Link to="/dashboard"> Back To Dashboard </Link>
 
@@ -183,16 +185,21 @@ class MigrationDetails extends Component {
                             <div className="card" style={divStyle}>
                                 <div className="card-body">
                                     <h4 className="card-title">Summary</h4>
-                                    <h6 className="card-subtitle mb-2 text-muted">Phase One</h6>
-                                    <p className="card-text"> <strong>Progress: </strong> {migration.phase === 1 ? "Complete" : "Not Started"}</p>
+                                    <h6 className="card-subtitle mb-2 text-muted">Stand Up</h6>
+                                    <p className="card-text"> <strong>Progress: </strong> {migration.isPhase1 ? "Complete" : "Not Started"}</p>
                                     <p className="card-text"> Status: Not Started</p>
                                     <h6 className="card-subtitle mb-2 text-muted">DBE Approval</h6>
-                                    <p className="card-text"> <strong>Progress: </strong> 0%</p>
+                                    <p className="card-text"> <strong>Progress: </strong> {migration.isPhase2 ? "Complete" : "Not Started"}</p>
                                     <p className="card-text"> Status: Not Started</p>
                                     <h6 className="card-subtitle mb-2 text-muted">QA Approval</h6>
-                                    <p className="card-text"> <strong>Progress: </strong> 0%</p>
+                                    <p className="card-text"> <strong>Progress: </strong> {migration.isPhase3 ? "Complete" : "Not Started"}</p>
                                     <p className="card-text"> Status: Not Started</p>
                                     <hr/>
+                                    <p className="card-text"> <strong>Target Date: </strong> {moment(migration.targetDate).format('MMMM Do YYYY, h:mm:ss a') }</p>
+                                    <p className="card-text"> <strong>Migration Date: </strong> {moment(migration.migrationDate).format('MMMM Do YYYY, h:mm:ss a') }</p>
+                                    <p className="card-text"> <strong>Last Processed Date: </strong> {moment(migration.beginProcesDate).format('MMMM Do YYYY, h:mm:ss a') }</p>
+                                    <p className="card-text"> <strong>Created Date: </strong> {moment(migration.createdAt).format('MMMM Do YYYY, h:mm:ss a') }</p>
+
                                 </div>
                             </div>
                         </div>
@@ -230,7 +237,7 @@ class MigrationDetails extends Component {
                                             deltaRowDataMode={true}
                                             // return id required for tree data and delta updates
                                             treeData={true}
-                                            getRowNodeId={data => data.id}
+                                            getRowNodeId={data => data.migrationId}
                                             onCellValueChanged={this.onCellValueChanged}
                                             >
                                         </AgGridReact>
@@ -259,7 +266,7 @@ class MigrationDetails extends Component {
                                             deltaRowDataMode={true}
                                             // return id required for tree data and delta updates
                                             treeData={true}
-                                            getRowNodeId={data => data.id}
+                                            getRowNodeId={data => data.migrationId}
                                             onCellValueChanged= {(e) => {
                                                 console.log(e);
                                             } }
@@ -288,7 +295,7 @@ class MigrationDetails extends Component {
 
 function mapStateToProps({ migration, lobMappings, periodsMappings }, ownProps) {
     return {
-        migration: migration,
+        migration: migration[0],
         lobs: lobMappings,
         periods: periodsMappings
     };

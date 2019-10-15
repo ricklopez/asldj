@@ -2,8 +2,14 @@ import * as types from '../constants/action-types';
 import * as env from '../constants/app-environment';
 import axios from 'axios';
 
+
+
+
 export function fetchMigrations(data) {
-    const reqPromise = axios.get(env.MIGRATIONS_URL);
+    const headers = {
+    };
+
+    const reqPromise = axios.get('http://localhost:51044/api/v1/migrations', {headers});
 
     return {
         type: types.FETCH_MIGRATIONS,
@@ -33,7 +39,8 @@ export function fetchPeriodMappings(data) {
 }
 
 export function createMigration(
-    {name, sourceHostName, sourceDB, sourceSchema, sourceXMLCount, destHostName, destDB, destSchema, destXMLCount, phase, targetDate, complete   },
+    {migrationName, sourceHostName, sourceDB, sourceSchema, sourceXMLCount,
+        destDbHostName, destDb, destSchema, destXMLCount, isPhase1, isPhase4, targetDate   },
     callback) {
     // if(data.tasks === undefined){
     //     data.tasks = data.tasks;
@@ -44,21 +51,23 @@ export function createMigration(
     // });
 
 
-    const reqPromise = axios.post(env.MIGRATIONS_URL,{
-        name,
+    const reqPromise = axios.post('http://localhost:51044/api/v1/migrations',{
+        migrationName,
         sourceHostName,
         sourceDB,
         sourceSchema,
         sourceXMLCount,
-        destHostName,
-        destDB,
+        destDbHostName,
+        destDb,
         destSchema,
         destXMLCount,
-        phase,
-        targetDate,
-        complete
-    }) .then(r => callback(r));
-
+        isPhase1,
+        isPhase4,
+        targetDate
+    }, {
+        headers: {
+            'Content-Type': 'application/json'
+        }});
     return {
         type: types.CREATE_MIGRATION,
         payload: reqPromise

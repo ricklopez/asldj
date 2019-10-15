@@ -6,20 +6,6 @@ import {completeTask, createStandUpDB} from "../../actions/task-actions";
 import axios from "axios";
 import * as env from "../../constants/app-environment";
 
-const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-];
-
-const scaryAnimals = [
-    { label: "Alligators", value: 1 },
-    { label: "Crocodiles", value: 2 },
-    { label: "Sharks", value: 3 },
-    { label: "Small crocodiles", value: 4 },
-    { label: "Smallest crocodiles", value: 5 },
-    { label: "Snakes", value: 6 },
-];
 
 
 export default class NameCellRenderer extends Component {
@@ -32,10 +18,7 @@ export default class NameCellRenderer extends Component {
     componentDidMount() {
         const { id } = 1;
 
-        // this.props.fetchLOBMappings(id);
-        // this.props.fetchPeriodMappings(id);
-
-        const reqPromise = axios.get(`${env.AUTH_ROOT_URL}/Catalyst-LOB`);
+        const reqPromise = axios.get(`${env.AUTH_ROOT_URL}/catalyst-lobs`);
 
 
         reqPromise.then((r) => {
@@ -55,8 +38,8 @@ export default class NameCellRenderer extends Component {
 
     render() {
 
-        const optionsList = this.state.lobs.map((item) => {
-            return <option key={item.id} value={item.code}>{item.lob}</option>
+        const optionsList = this.state.lobs.map((item, index) => {
+            return <option key={item.lobId} value={item.internalCode}>{item.lob}</option>
         });
 
         return (

@@ -11,12 +11,10 @@ export default function(state = {}, action) {
             return action.payload.data ; //ES6
 
         case UPDATE_MIGRATION:
-            console.log(action);
 
-            return action.payload.data;
+            return state;
 
         case STANDUP_DB:
-            console.log(action);
 
             return state;
 

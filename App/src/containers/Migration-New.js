@@ -50,13 +50,8 @@ class MigrationRequestNew extends Component {
     }
 
     onSubmit(values) {
-        console.log( "Form Values");
-        console.log(values);
-        this.props.createLoanRequest(values, (r) => {
-            console.log("Response");
-            console.log(r);
-            this.props.history.push(`/migration/details/${r.data.id}`);
-        });
+
+        this.props.createLoanRequest(values);
     }
 
 
@@ -76,7 +71,7 @@ class MigrationRequestNew extends Component {
                             <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                                 <Field
                                     label="Name"
-                                    name="name"
+                                    name="migrationName"
                                     type="text"
                                     component={this.renderField}
                                 />
@@ -88,7 +83,7 @@ class MigrationRequestNew extends Component {
                                 />
                                 <Field
                                     label="Source DB"
-                                    name="sourceDB"
+                                    name="sourceDb"
                                     type="text"
                                     component={this.renderField}
                                 />
@@ -100,40 +95,34 @@ class MigrationRequestNew extends Component {
                                 />
                                 <Field
                                     label="Source XML Count"
-                                    name="sourceXMLCount"
+                                    name="sourceXmlCount"
                                     type="text"
                                     component={this.renderField}
                                 />
                                 <Field
                                     label="Dest Host Name"
-                                    name="sourceHostName"
+                                    name="destDbHostName"
                                     type="text"
                                     component={this.renderField}
                                 />
                                 <Field
                                     label="Dest DB"
-                                    name="sourceDB"
+                                    name="destDb"
                                     type="text"
                                     component={this.renderField}
                                 />
                                 <Field
                                     label="Dest Schema"
-                                    name="sourceSchema"
+                                    name="destSchema"
                                     type="text"
                                     component={this.renderField}
                                 />
                                 <Field
-                                    label="Dest XML Count"
-                                    name="sourceXMLCount"
-                                    type="text"
-                                    component={this.renderField}
-                                />
-                                <Field
-                                    name="phase"
+                                    name="isPhase1"
                                     component={(e) => this.renderSelector(e, phase)}
                                 />
                                 <Field
-                                    name="completed"
+                                    name="isPhase4"
                                     component={(e) => this.renderSelector(e, completed)}
                                 />
                                 <Field
@@ -171,7 +160,6 @@ function validate(values){
 }
 
 export default reduxForm({
-    validate,
     form: 'MigrationRequestNewForm' // Make sure this is unique
 })(
     connect(null, {createLoanRequest: createMigration})(MigrationRequestNew)
