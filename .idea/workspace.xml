@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a8b470fb-6b05-4d25-a127-6ef3a4d36bec" name="Default" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1R8S0CiUDDk1bZwn385B60sVISh" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/reducers" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.prettier" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.prettier" value="project" />
+    <property name="node.js.path.for.package.standard" value="project" />
+    <property name="node.js.selected.package.eslint" value="C:\Users\RickL\OneDrive\Verys\projects-2019\qq-kraken\node_modules\eslint" />
+    <property name="node.js.selected.package.prettier" value="" />
+    <property name="node.js.selected.package.standard" value="C:\Users\RickL\OneDrive\Verys\projects-2019\qq-kraken\node_modules\eslint" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="terminal" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\RickL\OneDrive\Verys\projects-2019\qq-kraken\src\reducers" />
+      <recent name="C:\Users\RickL\OneDrive\Verys\projects-2019\qq-kraken\src\assets" />
+      <recent name="C:\Users\RickL\OneDrive\Verys\projects-2019\qq-kraken\src\infrastructure\types" />
+      <recent name="C:\Users\RickL\OneDrive\Verys\projects-2019\qq-kraken\src\containers" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a8b470fb-6b05-4d25-a127-6ef3a4d36bec" name="Default" comment="" />
+      <created>1568859639966</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1568859639966</updated>
+      <workItem from="1568859641168" duration="1925000" />
+      <workItem from="1568861654691" duration="364000" />
+      <workItem from="1568862082020" duration="9825000" />
+      <workItem from="1569009394093" duration="5754000" />
+      <workItem from="1569047010710" duration="562000" />
+      <workItem from="1569047622963" duration="270000" />
+      <workItem from="1569047989464" duration="220000" />
+      <workItem from="1569048234931" duration="87000" />
+      <workItem from="1569048339726" duration="97000" />
+      <workItem from="1569048455811" duration="25000" />
+      <workItem from="1569048502593" duration="51000" />
+      <workItem from="1569048574612" duration="57000" />
+      <workItem from="1569048649336" duration="39000" />
+      <workItem from="1569048706497" duration="19134000" />
+      <workItem from="1569595010421" duration="15526000" />
+      <workItem from="1569859077502" duration="638000" />
+      <workItem from="1569942886279" duration="1541000" />
+      <workItem from="1570047445404" duration="76000" />
+      <workItem from="1570047562263" duration="2624000" />
+      <workItem from="1570137296295" duration="331000" />
+      <workItem from="1570137667720" duration="4049000" />
+      <workItem from="1570143757527" duration="334000" />
+      <workItem from="1570202192563" duration="1675000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/actions/sign-in-actions.js</url>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
