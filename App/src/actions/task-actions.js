@@ -32,12 +32,10 @@ export function updateLobMapping(data) {
     };
 }
 
-export function createStandUpDB(migrationId, callback) {
+export function createStandUpDB(migration) {
 
-
-    const reqPromise = axios.put(`http://localhost:51044/api/v1/migrations/${migrationId}`,{
-        IsPhase1: true
-    }, {
+    migration.isPhase1 = true;
+    const reqPromise = axios.put(`http://localhost:51044/api/v1/migrations/${migration.migrationId}`,migration, {
         headers: {
             'Content-Type': 'application/json'
         }});

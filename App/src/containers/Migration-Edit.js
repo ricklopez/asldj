@@ -51,7 +51,7 @@ class MigrationRequestNew extends Component {
 
     onSubmit(values) {
 
-        this.props.createMigration(values);
+        this.props.createLoanRequest(values);
     }
 
 
@@ -93,7 +93,12 @@ class MigrationRequestNew extends Component {
                                     type="text"
                                     component={this.renderField}
                                 />
-
+                                <Field
+                                    label="Source XML Count"
+                                    name="sourceXmlCount"
+                                    type="text"
+                                    component={this.renderField}
+                                />
                                 <Field
                                     label="Dest Host Name"
                                     name="destDbHostName"
@@ -112,7 +117,14 @@ class MigrationRequestNew extends Component {
                                     type="text"
                                     component={this.renderField}
                                 />
-
+                                <Field
+                                    name="isPhase1"
+                                    component={(e) => this.renderSelector(e, phase)}
+                                />
+                                <Field
+                                    name="isPhase4"
+                                    component={(e) => this.renderSelector(e, completed)}
+                                />
                                 <Field
                                     label="Target Date"
                                     name="targetDate"
@@ -150,5 +162,5 @@ function validate(values){
 export default reduxForm({
     form: 'MigrationRequestNewForm' // Make sure this is unique
 })(
-    connect(null, {createMigration: createMigration})(MigrationRequestNew)
+    connect(null, {createLoanRequest: createMigration})(MigrationRequestNew)
 );

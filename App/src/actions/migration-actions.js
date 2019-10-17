@@ -38,10 +38,7 @@ export function fetchPeriodMappings(data) {
     };
 }
 
-export function createMigration(
-    {migrationName, sourceHostName, sourceDB, sourceSchema, sourceXMLCount,
-        destDbHostName, destDb, destSchema, destXMLCount, isPhase1, isPhase4, targetDate   },
-    callback) {
+export function createMigration(data) {
     // if(data.tasks === undefined){
     //     data.tasks = data.tasks;
     // }
@@ -51,20 +48,7 @@ export function createMigration(
     // });
 
 
-    const reqPromise = axios.post('http://localhost:51044/api/v1/migrations',{
-        migrationName,
-        sourceHostName,
-        sourceDB,
-        sourceSchema,
-        sourceXMLCount,
-        destDbHostName,
-        destDb,
-        destSchema,
-        destXMLCount,
-        isPhase1,
-        isPhase4,
-        targetDate
-    }, {
+    const reqPromise = axios.post('http://localhost:51044/api/v1/migrations',data, {
         headers: {
             'Content-Type': 'application/json'
         }});

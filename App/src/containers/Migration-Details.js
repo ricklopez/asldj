@@ -83,19 +83,15 @@ class MigrationDetails extends Component {
 
     onStandUp(event) {
         const { id } = this.props.match.params;
-        this.props.createStandUpDB( id, (r) => {
-            this.props.completeTask({id: r.data.migrationId, phase: 1});
-            this.props.history.push(`/migration/${r.data.migrationId}`);
-        });
-        console.log(event);
+        this.props.createStandUpDB(this.props.migration);
     }
 
     onNotify(event) {
-        console.log(event);
+
     }
 
     CountryCellRenderer(params) {
-        console.log(params);
+
         return params.value.name;
     }
 

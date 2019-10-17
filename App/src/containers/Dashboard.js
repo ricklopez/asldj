@@ -11,9 +11,13 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import {Link} from "react-router-dom";
 import moment from 'moment';
+import LinkCellRenderer from '../components/renderers/linkCellRenderer';
 
 const columns = [
-    { field: 'migrationId', headerName: 'ID', sortable: true, filter: true},
+    { field: 'migrationId', headerName: 'ID',
+        cellRendererFramework: LinkCellRenderer,
+        sortable: true,
+        filter: true},
     { field: 'migrationName', headerName: 'Name', sortable: true, filter: true},
     { field: 'isPhase1', headerName: 'Complete', sortable: true, filter: true },
 
@@ -81,7 +85,7 @@ class Dashboard extends Component {
                         </ul>
 
                         <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                            <span>Reports</span>
+                            <span><a href={"./reports.html"}>Reports</a></span>
                             <a className="d-flex align-items-center text-muted" href="#">
                                 <span data-feather="plus-circle"></span>
                             </a>
@@ -99,7 +103,7 @@ class Dashboard extends Component {
                             </div>
                             <div className="col">
                                 <div className="text-xs-right">
-                                    <Link className="btn btn-outline-info float-right" to="/migrations/new">
+                                    <Link className="btn btn-outline-info float-right" to="/migration/new">
                                         Add a migration
                                     </Link>
                                 </div>
