@@ -52,7 +52,6 @@ const columnsPeriods = [
     { field: 'catalystPeriod', headerName: 'Catalyst Period', sortable: true, filter: true, editable:true},
 ];
 
-// create your cellRenderer as a React component
 
 class MigrationDetails extends Component {
     constructor(props) {
@@ -291,7 +290,7 @@ class MigrationDetails extends Component {
 
 function mapStateToProps({ migration, lobMappings, periodsMappings }, ownProps) {
     return {
-        migration: migration[0],
+        migration: migration,
         lobs: lobMappings,
         periods: periodsMappings
     };

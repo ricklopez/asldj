@@ -148,8 +148,8 @@ function validate(values){
     const errors = {};
 
     // Check Inputs with our custom validations
-    if (!values.title || values.title.length < 3) {
-        errors.title = "Enter a valid title. Must be at least 3 characters.";
+    if (!values.migrationName || values.migrationName.length < 3) {
+        errors.migrationName = "Enter a valid title. Must be at least 3 characters.";
     }
     if (!values.type) {
         errors.type = 'Enter a type';

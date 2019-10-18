@@ -1,6 +1,4 @@
 import React from 'react';
-import logo from '../logo.svg';
-//import _ from 'lodash';
 
 export default (props) => {
     return(

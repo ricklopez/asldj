@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-//import { Link } from 'react-router-dom';
 import { fetchMigrations } from '../actions/migration-actions';
-import MigrationList from './Migration-List';
 import logo from '../logo.svg';
 import AppHeader from '../components/header';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import {Link} from "react-router-dom";
-import moment from 'moment';
 import LinkCellRenderer from '../components/renderers/linkCellRenderer';
 
 const columns = [
@@ -49,37 +46,14 @@ class Dashboard extends Component {
                     <div className="sidebar-sticky">
                         <ul className="nav flex-column">
                             <li className="nav-item">
-                                <a className="nav-link active" href="#">
-                                    <span data-feather="home"></span>
+                                <a className="nav-link active" href="./dashboard">
                                     Dashboard <span className="sr-only">(current)</span>
                                 </a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">
-                                    <span data-feather="file"></span>
+                                <a className="nav-link text-primary" href="./migrations">
                                     Migrations
                                 </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">
-                                    <span data-feather="shopping-cart"></span>
-                                    Mappings
-                                </a>
-
-                                <ul className="nav flex-column ml-2 mb-2">
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#">
-                                            <span data-feather="file-text"></span>
-                                            LOB
-                                        </a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#">
-                                            <span data-feather="file-text"></span>
-                                            Payments Periods
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
 
                         </ul>

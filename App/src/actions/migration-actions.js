@@ -39,22 +39,17 @@ export function fetchPeriodMappings(data) {
 }
 
 export function createMigration(data) {
-    // if(data.tasks === undefined){
-    //     data.tasks = data.tasks;
-    // }
-    // const tasks = [];
-    // data.tasks.forEach((t) => {
-    //     tasks.push({name: t, complete: false});
-    // });
 
 
     const reqPromise = axios.post('http://localhost:51044/api/v1/migrations',data, {
         headers: {
             'Content-Type': 'application/json'
         }});
+    debugger;
     return {
         type: types.CREATE_MIGRATION,
-        payload: reqPromise
+        payload:reqPromise,
+        meta: data
     };
 
 }
