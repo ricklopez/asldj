@@ -1,0 +1,28 @@
+﻿CREATE TABLE [dbo].[Catalyst_AcordForms] (
+    [AcordFormID]           INT              IDENTITY (1, 1) NOT NULL,
+    [AcordTemplateID]       UNIQUEIDENTIFIER NOT NULL,
+    [CreatedOn]             DATETIME2 (7)    NOT NULL,
+    [CreatedBy]             INT              NOT NULL,
+    [Data]                  VARCHAR (MAX)    NULL,
+    [CustomerID]            INT              NOT NULL,
+    [PolicyID]              INT              NULL,
+    [EndorsementID]         INT              NULL,
+    [Description]           VARCHAR (255)    NULL,
+    [FormNumber]            VARCHAR (255)    NULL,
+    [State]                 CHAR (2)         NULL,
+    [EditionDate]           DATE             NULL,
+    [DeletedDate]           DATE             NULL,
+    [RowSource]             ROWVERSION       NULL,
+    [ReferenceCounter]      INT              NULL,
+    [MultipleLossPayees]    BIT              NULL,
+    [SignatureID]           INT              NULL,
+    [Locked]                BIT              NULL,
+    [LockedDate]            DATETIME2 (7)    NULL,
+    [SupplementParentId]    INT              NULL,
+    [SupplementParentOrder] SMALLINT         NOT NULL,
+    [LockedMethod]          CHAR (5)         NULL,
+    [ParentId]              INT              NULL,
+    [OriginalLossPayeeId]   INT              NULL,
+    CONSTRAINT [PK_AcordForms_1] PRIMARY KEY CLUSTERED ([AcordFormID] ASC) WITH (FILLFACTOR = 90)
+);
+

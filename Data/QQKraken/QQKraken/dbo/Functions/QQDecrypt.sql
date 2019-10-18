@@ -1,0 +1,6 @@
+﻿CREATE FUNCTION [dbo].[QQDecrypt]
+(@Input NVARCHAR (MAX) NULL)
+RETURNS NVARCHAR (MAX)
+AS
+ EXTERNAL NAME [CLR_SP].[Security].[QQDecrypt]
+
