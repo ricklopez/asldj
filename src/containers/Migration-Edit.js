@@ -12,7 +12,6 @@ const number = value => value && isNaN(Number(value)) ? 'Must be a number' : und
 
 class MigrationRequestNew extends Component {
 
-
     renderSelector(input, list){
         const { meta: {touched, error }} = input;
         return(
@@ -52,14 +51,12 @@ class MigrationRequestNew extends Component {
 
     onSubmit(values) {
 
-        this.props.createMigration(values);
+        this.props.createLoanRequest(values);
     }
 
 
     render() {
         const { handleSubmit } = this.props;
-        if(this.props.migration.migrationId)
-            this.props.history.push(`/migrations/${this.props.migration.migrationId}`);
         return (
             <div>
                 <CoreHeader></CoreHeader>
@@ -96,7 +93,12 @@ class MigrationRequestNew extends Component {
                                     type="text"
                                     component={this.renderField}
                                 />
-
+                                <Field
+                                    label="Source XML Count"
+                                    name="sourceXmlCount"
+                                    type="text"
+                                    component={this.renderField}
+                                />
                                 <Field
                                     label="Dest Host Name"
                                     name="destDbHostName"
@@ -115,7 +117,14 @@ class MigrationRequestNew extends Component {
                                     type="text"
                                     component={this.renderField}
                                 />
-
+                                <Field
+                                    name="isPhase1"
+                                    component={(e) => this.renderSelector(e, phase)}
+                                />
+                                <Field
+                                    name="isPhase4"
+                                    component={(e) => this.renderSelector(e, completed)}
+                                />
                                 <Field
                                     label="Target Date"
                                     name="targetDate"
@@ -150,21 +159,8 @@ function validate(values){
     return errors;
 }
 
-const mapStateToProps = state => ({
-    migration: state.migration,
-})
-
-const mapDispatchToProps = dispatch => ({
-    // ...
-})
-
-MigrationRequestNew = connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(MigrationRequestNew)
-
 export default reduxForm({
     form: 'MigrationRequestNewForm' // Make sure this is unique
 })(
-    connect(null, {createMigration: createMigration})(MigrationRequestNew)
+    connect(null, {createLoanRequest: createMigration})(MigrationRequestNew)
 );

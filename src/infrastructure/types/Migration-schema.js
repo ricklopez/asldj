@@ -4,7 +4,7 @@ import schema from 'schm';
 
 const migrationSchema = schema({
     id: Number,
-    name: String,
+    migrationName: String,
     sourceHostName: String,
     sourceDB: String,
     sourceSchema: String,

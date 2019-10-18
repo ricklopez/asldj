@@ -28,7 +28,7 @@ ReactDOM.render(
         <BrowserRouter>
             <div>
                 <Switch>
-                    <Route path="/migration/details/:id" component={MigrationDetails} />
+                    <Route path="/migrations/:id" component={MigrationDetails} />
                     <Route path="/migration/new" component={MigrationNew} />
                     <Route path="/migrations" component={MigrationAll} />
                     <Route path="/dashboard" component={Dashboard} store={store}/>

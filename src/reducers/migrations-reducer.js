@@ -14,7 +14,9 @@ export default function(state = [], action) {
             }
 
         case FETCH_MIGRATION:
-            return { ...state, [action.payload.data.id]: action.payload.data }; //ES6
+            if(action.payload.data && action.payload.data.hasOwnProperty('migrationId'))
+                return { ...state, [action.payload.data.migrationId]: action.payload.data }; //ES6
+            return state;
 
         // case TASK_COMPLETED:
         //
@@ -23,11 +25,6 @@ export default function(state = [], action) {
         //     } else {
         //         return state;
         //     }
-
-        case CREATE_MIGRATION:
-            console.log(action);
-
-            return state;
 
         default:
             return state;

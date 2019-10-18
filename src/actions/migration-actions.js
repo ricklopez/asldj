@@ -2,8 +2,14 @@ import * as types from '../constants/action-types';
 import * as env from '../constants/app-environment';
 import axios from 'axios';
 
+
+
+
 export function fetchMigrations(data) {
-    const reqPromise = axios.get(env.MIGRATIONS_URL);
+    const headers = {
+    };
+
+    const reqPromise = axios.get('http://localhost:51044/api/v1/migrations', {headers});
 
     return {
         type: types.FETCH_MIGRATIONS,
@@ -32,9 +38,7 @@ export function fetchPeriodMappings(data) {
     };
 }
 
-export function createMigration(
-    {name, sourceHostName, sourceDB, sourceSchema, sourceXMLCount, destHostName, destDB, destSchema, destXMLCount, phase, targetDate, complete   },
-    callback) {
+export function createMigration(data) {
     // if(data.tasks === undefined){
     //     data.tasks = data.tasks;
     // }
@@ -44,24 +48,15 @@ export function createMigration(
     // });
 
 
-    const reqPromise = axios.post(env.MIGRATIONS_URL,{
-        name,
-        sourceHostName,
-        sourceDB,
-        sourceSchema,
-        sourceXMLCount,
-        destHostName,
-        destDB,
-        destSchema,
-        destXMLCount,
-        phase,
-        targetDate,
-        complete
-    }) .then(r => callback(r));
-
+    const reqPromise = axios.post('http://localhost:51044/api/v1/migrations',data, {
+        headers: {
+            'Content-Type': 'application/json'
+        }});
+    debugger;
     return {
         type: types.CREATE_MIGRATION,
-        payload: reqPromise
+        payload:reqPromise,
+        meta: data
     };
 
 }

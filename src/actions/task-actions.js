@@ -3,12 +3,12 @@ import * as env from '../constants/app-environment';
 import axios from 'axios';
 
 export function completeTask(data) {
-    const reqPromise = axios.put(`${env.MIGRATION_URL}/${data.id}?auth=xyz`,{
-        id: data.id,
-        phase: data.phase
-    });
-
-    console.log(data);
+    const reqPromise = axios.put(`http://localhost:51044/api/v1/migrations/${data.id}`,{
+        IsPhase1: true
+    }, {
+        headers: {
+            'Content-Type': 'application/json'
+        }});
 
     return {
         type: types.UPDATE_MIGRATION,
@@ -18,7 +18,11 @@ export function completeTask(data) {
 
 
 export function updateLobMapping(data) {
-    const reqPromise = axios.put(`${env.MIGRATION_URL}/${data.migrationId}/lob-mappings/${data.id}`, data);
+    debugger;
+    const reqPromise = axios.put(`http://localhost:51044/api/v1/lob-mappings`, data, {
+        headers: {
+            'Content-Type': 'application/json'
+        }});
 
     console.log(data);
 
@@ -28,10 +32,13 @@ export function updateLobMapping(data) {
     };
 }
 
-export function createStandUpDB(migrationId, callback) {
+export function createStandUpDB(migration) {
 
-
-    const reqPromise = axios.post(env.STANDUP_DB,{migrationId}) .then(r => callback(r));
+    migration.isPhase1 = true;
+    const reqPromise = axios.put(`http://localhost:51044/api/v1/migrations/${migration.migrationId}`,migration, {
+        headers: {
+            'Content-Type': 'application/json'
+        }});
 
     return {
         type: types.STANDUP_DB,

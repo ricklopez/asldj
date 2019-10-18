@@ -10,23 +10,26 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import {Link} from "react-router-dom";
+import moment from 'moment';
+import LinkCellRenderer from '../components/renderers/linkCellRenderer';
 
 const columns = [
-    { field: 'id', headerName: 'ID', sortable: true, filter: true},
-    { field: 'name', headerName: 'Name', sortable: true, filter: true},
-    { field: 'complete', headerName: 'Complete', sortable: true, filter: true },
-    { field: 'phase', headerName: 'Phase', sortable: true, filter: true },
+    { field: 'migrationId', headerName: 'ID',
+        cellRendererFramework: LinkCellRenderer,
+        sortable: true,
+        filter: true},
+    { field: 'migrationName', headerName: 'Name', sortable: true, filter: true},
+    { field: 'isPhase1', headerName: 'Complete', sortable: true, filter: true },
 
     { field: 'sourceHostName', headerName: 'Source Host Name', sortable: true, filter: true },
-    { field: 'sourceDB', headerName: 'Source DB', sortable: true, filter: true },
+    { field: 'sourceDb', headerName: 'Source DB', sortable: true, filter: true },
     { field: 'sourceSchema', headerName: 'Source Schema', sortable: true, filter: true},
-    { field: 'sourceXMLCount', headerName: 'Source XML Count', sortable: true, filter: true},
-    { field: 'destName', headerName: 'Dest Name', sortable: true, filter: true },
-    { field: 'destDB', headerName: 'Dest DB', sortable: true, filter: true},
+    { field: 'sourceXmlCount', headerName: 'Source XML Count', sortable: true, filter: true},
+    { field: 'destDbHostName', headerName: 'Dest Name', sortable: true, filter: true },
+    { field: 'destDb', headerName: 'Dest DB', sortable: true, filter: true},
     { field: 'destSchema', headerName: 'Dest Schema', sortable: true, filter: true},
-    { field: 'destXMLCount', headerName: 'Dest XML Count', sortable: true, filter: true},
     { field: 'targetDate', headerName: 'Target Date', sortable: true, filter: true},
-    { field: 'createdDate', headerName: 'Created', sortable: true, filter: true}
+    { field: 'createdAt', headerName: 'Created', sortable: true, filter: true}
 ];
 
 class Dashboard extends Component {
@@ -46,43 +49,20 @@ class Dashboard extends Component {
                     <div className="sidebar-sticky">
                         <ul className="nav flex-column">
                             <li className="nav-item">
-                                <a className="nav-link active" href="#">
-                                    <span data-feather="home"></span>
+                                <a className="nav-link active" href="./dashboard">
                                     Dashboard <span className="sr-only">(current)</span>
                                 </a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">
-                                    <span data-feather="file"></span>
+                                <a className="nav-link text-primary" href="./migrations">
                                     Migrations
                                 </a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#">
-                                    <span data-feather="shopping-cart"></span>
-                                    Mappings
-                                </a>
-
-                                <ul className="nav flex-column ml-2 mb-2">
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#">
-                                            <span data-feather="file-text"></span>
-                                            LOB
-                                        </a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#">
-                                            <span data-feather="file-text"></span>
-                                            Payments Periods
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
 
                         </ul>
 
                         <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                            <span>Reports</span>
+                            <span><a href={"./reports.html"}>Reports</a></span>
                             <a className="d-flex align-items-center text-muted" href="#">
                                 <span data-feather="plus-circle"></span>
                             </a>

@@ -8,15 +8,18 @@ export default function(state = {}, action) {
 
 
         case FETCH_MIGRATION:
-            return action.payload.data ; //ES6
+            return action.payload.data[0] ; //ES6
 
         case UPDATE_MIGRATION:
-            console.log(action);
 
-            return action.payload.data;
+            return state;
+
+        case CREATE_MIGRATION:
+            console.log(action);
+            debugger;
+            return {migrationId: action.payload.data[0], ...action.meta};
 
         case STANDUP_DB:
-            console.log(action);
 
             return state;
 
