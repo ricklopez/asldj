@@ -13,7 +13,7 @@
     </RootPath>
     <RootNamespace>QQKraken</RootNamespace>
     <AssemblyName>QQKraken</AssemblyName>
-    <ModelCollation>1033, CI</ModelCollation>
+    <ModelCollation>1033,CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -22,6 +22,8 @@
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -56,5 +58,112 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Views\" />
+    <Folder Include="Security\" />
+    <Folder Include="dbo\Functions\" />
+    <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="Assemblies\" />
+    <Folder Include="dbo\Synonyms\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\MigrationsErrors.sql" />
+    <Build Include="dbo\Tables\Migrations.sql" />
+    <Build Include="dbo\Tables\MigrationTableStats.sql" />
+    <Build Include="dbo\Tables\CatalystCommon_AcordBlobEmulator.sql" />
+    <Build Include="dbo\Tables\CatalystCommon_AcordFieldTypes.sql" />
+    <Build Include="dbo\Tables\CatalystCommon_AcordFormSection.sql" />
+    <Build Include="dbo\Tables\CatalystCommon_AcordFormSectionRelation.sql" />
+    <Build Include="dbo\Tables\CatalystCommon_AcordFormTemplates.sql" />
+    <Build Include="dbo\Tables\SqlServers.sql" />
+    <Build Include="dbo\Tables\Evolution_LobCrosswalk.sql" />
+    <Build Include="dbo\Tables\Evolution_AcordJsonConverted.sql" />
+    <Build Include="dbo\Tables\SqlServersDatabases.sql" />
+    <Build Include="dbo\Tables\Catalyst_LOBs.sql" />
+    <Build Include="dbo\Tables\Evolution_XMLTable.sql" />
+    <Build Include="dbo\Tables\Evolution_AcordCrosswalk.sql" />
+    <Build Include="dbo\Tables\Evolution_AcordNodeCrosswalk.sql" />
+    <Build Include="dbo\Tables\MigrationsTypes.sql" />
+    <Build Include="dbo\Tables\Catalyst_AcordForms.sql" />
+    <Build Include="dbo\Tables\Evolution_AcordDocumentParses.sql" />
+    <Build Include="dbo\Tables\Evolution_MemoCrosswalk.sql" />
+    <Build Include="dbo\Tables\MigrationsLog.sql" />
+    <Build Include="dbo\Tables\Evolution_PeriodCrosswalk.sql" />
+    <Build Include="dbo\Tables\Catalyst_Periods.sql" />
+    <Build Include="dbo\Tables\MigrationsDictionaries.sql" />
+    <Build Include="dbo\Tables\Catalyst_State_Exceptions.sql" />
+    <Build Include="dbo\Tables\MigrationsTableAlias.sql" />
+    <Build Include="dbo\Views\XML docs parsed.sql" />
+    <Build Include="Security\QQSOLUTIONS_glogan.sql" />
+    <Build Include="Security\CLR_SP_Login.sql" />
+    <Build Include="Security\QQSOLUTIONS_ykachmaryk.sql" />
+    <Build Include="Security\QQSOLUTIONS_ybokalo.sql" />
+    <Build Include="Security\RoleMemberships.sql" />
+    <Build Include="dbo\Functions\Evo_Acord_Json2.sql" />
+    <Build Include="dbo\Functions\Evo_Acord_Json3.sql" />
+    <Build Include="dbo\Functions\Evo_Acord_Json.sql" />
+    <Build Include="dbo\Functions\QQEncrypt.sql" />
+    <Build Include="dbo\Functions\QQDecrypt.sql" />
+    <Build Include="dbo\Functions\AcordPageOneUnionView.sql" />
+    <Build Include="dbo\Functions\AcordPageOneBaseView.sql" />
+    <Build Include="dbo\Functions\AcordPageOneUnionView2.sql" />
+    <Build Include="dbo\Stored Procedures\Dts_AcordTemplateMap.sql" />
+    <Build Include="dbo\Stored Procedures\Dts_AcordJsonRow.sql" />
+    <Build Include="dbo\Stored Procedures\Dts_AcordJsonBatch.sql" />
+    <Build Include="dbo\Stored Procedures\Mpmm_Xml_Batch_Database.sql" />
+    <Build Include="dbo\Stored Procedures\zGetSchemaFromInstance.sql" />
+    <Build Include="dbo\Stored Procedures\Mpmm_XmlParse.sql" />
+    <Build Include="dbo\Stored Procedures\Mpmm_Xml_Batch.sql" />
+    <Build Include="dbo\Stored Procedures\App_Ins_Migration.sql" />
+    <Build Include="dbo\Stored Procedures\App_Upd_Migration.sql" />
+    <Build Include="dbo\Stored Procedures\App_Sel_EvolutionPeriodQueue.sql" />
+    <Build Include="dbo\Stored Procedures\App_Sel_EvolutionLobQueue.sql" />
+    <Build Include="dbo\Stored Procedures\Dts_Sel_Migrations_Preprocess.sql" />
+    <Build Include="dbo\Stored Procedures\App_Sel_ValueNamePairs.sql" />
+    <Build Include="dbo\Stored Procedures\App_Sel_MigrationsErrors.sql" />
+    <Build Include="dbo\Stored Procedures\App_Sel_MigrationsLog.sql" />
+    <Build Include="dbo\Stored Procedures\Mpmm_PivotAcordBatch.sql" />
+    <Build Include="dbo\Stored Procedures\zMpmm_SynonymBatch.sql" />
+    <Build Include="dbo\Stored Procedures\Mpmm_AcordTemplateMapper.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetails.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsAuto.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsAutoDrivers.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsAutoPhysicalDamageCoverages.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsCAutoCoverages.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsCAutoDrivers.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsCAutoVehicles.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsCGLCoverages.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsGeneralAdditionalInterest.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsGeneralNatureOfBusiness.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsHomeAdditionalInterest.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsHomeApplicants.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsHomeCoApplicants.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsHomeCoverageAndLimits.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsHomeCoverageDeductibles.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsHomeCoverages.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsHomeLocationSchedule.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsHomeLossHistory.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsHomePayPlan.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsHomePriorCoverage.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsHomeReplaceCost1.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsHomeReplaceCost2.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsHomeStatusOfTransaction.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsHomeUnderwriting1.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyDetailsLiabilityCoverages.sql" />
+    <Build Include="dbo\Synonyms\qqcPolicyQuoteInfo.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assemblies\QQCatalyst.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="QQCatalyst">
+      <HintPath>Assemblies\QQCatalyst.dll</HintPath>
+      <SqlAssemblyName>CLR_SP</SqlAssemblyName>
+      <IsModelAware>True</IsModelAware>
+      <GenerateSqlClrDdl>False</GenerateSqlClrDdl>
+      <SqlOwnerName>dbo</SqlOwnerName>
+      <SqlPermissionSet>EXTERNAL_ACCESS</SqlPermissionSet>
+    </Reference>
   </ItemGroup>
 </Project>

@@ -10,12 +10,14 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Dapper;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace QQKrakenAPI.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/v1/migrations")]
     public class MigrationController : ControllerBase
     {
