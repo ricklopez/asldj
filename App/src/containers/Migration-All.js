@@ -29,7 +29,7 @@ const columns = [
 
 class Dashboard extends Component {
     componentDidMount() {
-        this.props.fetchMigrations();
+        this.props.fetchMigrations({token: this.props.auth.token});
     }
 
     render() {
@@ -71,7 +71,8 @@ class Dashboard extends Component {
 
 function mapStateToProps(state) {
     return {
-        migrations: state.migrations
+        migrations: state.migrations,
+        auth: state.auth
     };
 }
 

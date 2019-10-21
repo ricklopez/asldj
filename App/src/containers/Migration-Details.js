@@ -64,10 +64,10 @@ class MigrationDetails extends Component {
 
     componentDidMount() {
         const { id } = this.props.match.params;
-        this.props.fetchMigration(id);
+        this.props.fetchMigration({id, token: this.props.auth.token});
 
-        this.props.fetchLOBMappings(id);
-        this.props.fetchPeriodMappings(id);
+        this.props.fetchLOBMappings({id, token: this.props.auth.token});
+        this.props.fetchPeriodMappings({id, token: this.props.auth.token});
 
     }
 
@@ -82,7 +82,7 @@ class MigrationDetails extends Component {
 
     onStandUp(event) {
         const { id } = this.props.match.params;
-        this.props.createStandUpDB(this.props.migration);
+        this.props.createStandUpDB(this.props.migration, this.props.auth);
     }
 
     onNotify(event) {
@@ -280,19 +280,19 @@ class MigrationDetails extends Component {
     }
 
     onCellValueChanged = (event) => {
-        console.log({...event.data});
-        this.props.updateLobMapping({...event.data});
+        this.props.updateLobMapping({...event.data, token: this.props.token});
     };
 
 }
 
 
 
-function mapStateToProps({ migration, lobMappings, periodsMappings }, ownProps) {
+function mapStateToProps({ migration, lobMappings, periodsMappings, auth }, ownProps) {
     return {
         migration: migration,
         lobs: lobMappings,
-        periods: periodsMappings
+        periods: periodsMappings,
+        auth: auth
     };
 }
 

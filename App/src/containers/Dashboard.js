@@ -29,9 +29,14 @@ const columns = [
     { field: 'createdAt', headerName: 'Created', sortable: true, filter: true}
 ];
 
+
 class Dashboard extends Component {
+
+    constructor(props) {
+        super(props);
+    }
     componentDidMount() {
-        this.props.fetchMigrations();
+        this.props.fetchMigrations({token: this.props.auth.token});
     }
 
     render() {
@@ -39,6 +44,7 @@ class Dashboard extends Component {
         return (
             <div>
                 <AppHeader></AppHeader>
+
                 <nav className="col-md-2 d-none d-md-block bg-light sidebar">
                     <div className="bg-dark">
                         <img src={logo} className="App-logo m-auto" alt="logo" />
@@ -110,7 +116,8 @@ class Dashboard extends Component {
 
 function mapStateToProps(state) {
     return {
-        migrations: state.migrations
+        migrations: state.migrations,
+        auth: state.auth
     };
 }
 

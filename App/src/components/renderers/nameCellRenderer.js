@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import axios from "axios";
 import * as env from "../../constants/app-environment";
 
-
+let sessionKey = sessionStorage.getItem('adal.idtoken');
 
 export default class NameCellRenderer extends Component {
     constructor(props) {
@@ -14,7 +14,11 @@ export default class NameCellRenderer extends Component {
     componentDidMount() {
         const { id } = 1;
 
-        const reqPromise = axios.get(`${env.AUTH_ROOT_URL}/catalyst-lobs`);
+        const headers = {
+            Authorization: `Bearer ${sessionKey}`
+        };
+
+        const reqPromise = axios.get(`${env.AUTH_ROOT_URL}/catalyst-lobs`, {headers});
 
 
         reqPromise.then((r) => {

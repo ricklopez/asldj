@@ -12,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace QQKrakenAPI
 {
@@ -27,10 +29,26 @@ namespace QQKrakenAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(AzureADB2CDefaults.BearerAuthenticationScheme)
-                .AddAzureADB2CBearer(options => Configuration.Bind("AzureAdB2C", options));
+            //services.AddAuthentication(AzureADB2CDefaults.BearerAuthenticationScheme).AddAzureADB2CBearer(options => Configuration.Bind("AzureActiveDirectory", options));
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(jwtOptions =>
+                {
+                    jwtOptions.Authority = $"https://login.microsoftonline.com/tfp/{Configuration["AzureAdB2C:Tenant"]}/{Configuration["AzureAdB2C:Policy"]}/v2.0/";
+                    jwtOptions.Audience = Configuration["AzureAdB2C:ClientId"];
+                    jwtOptions.Events = new JwtBearerEvents
+                    {
+                        
+                    };
+                });
+
+
 
             services.AddCors();
+ 
+
 
 
 
@@ -50,12 +68,12 @@ namespace QQKrakenAPI
                 .AllowAnyMethod()
                 .AllowAnyHeader());
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            app.UseCookiePolicy();
             app.UseAuthentication();
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

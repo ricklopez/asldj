@@ -7,6 +7,7 @@ import CoreHeader from '../components/header';
 import SignInForm from '../components/sign-in-form';
 import Jumbotron from '../components/jumbotron';
 
+
 class SignIn extends Component {
     constructor(props) {
         super(props);
@@ -34,8 +35,8 @@ class SignIn extends Component {
     onFormSubmit(event) {
         event.preventDefault();
         this.props.signIn({useremail: this.state.useremail, password: 'password'});
-        this.setState({ useremail: '', password: ''});
-        this.props.history.push('/dashboard');
+        //this.setState({ useremail: '', password: ''});
+        //this.props.history.push('/dashboard');
 
     }
 

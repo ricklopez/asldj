@@ -17,7 +17,6 @@ using Microsoft.AspNetCore.Authorization;
 namespace QQKrakenAPI.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("api/v1/migrations")]
     public class MigrationController : ControllerBase
     {

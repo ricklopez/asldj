@@ -1,13 +1,15 @@
 import * as types from '../constants/action-types';
 import * as env from '../constants/app-environment';
 import axios from 'axios';
-
+let sessionKey = sessionStorage.getItem('adal.idtoken');
 export function completeTask(data) {
-    const reqPromise = axios.put(`http://localhost:51044/api/v1/migrations/${data.id}`,{
+    sessionKey = data.token || sessionKey;
+    const reqPromise = axios.put(`${env.AUTH_ROOT_URL}/migrations/${data.id}`,{
         IsPhase1: true
     }, {
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionKey}`
         }});
 
     return {
@@ -18,13 +20,13 @@ export function completeTask(data) {
 
 
 export function updateLobMapping(data) {
-    debugger;
-    const reqPromise = axios.put(`http://localhost:51044/api/v1/lob-mappings`, data, {
+    sessionKey = data.token || sessionKey;
+    const reqPromise = axios.put(`${env.AUTH_ROOT_URL}/lob-mappings`, data, {
         headers: {
-            'Content-Type': 'application/json'
-        }});
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionKey}`
 
-    console.log(data);
+        }});
 
     return {
         type: types.UPDATE_LOB_MAPPING,
@@ -32,12 +34,13 @@ export function updateLobMapping(data) {
     };
 }
 
-export function createStandUpDB(migration) {
-
+export function createStandUpDB(migration, data) {
+    sessionKey = data.token || sessionKey;
     migration.isPhase1 = true;
-    const reqPromise = axios.put(`http://localhost:51044/api/v1/migrations/${migration.migrationId}`,migration, {
+    const reqPromise = axios.put(`${env.AUTH_ROOT_URL}/migrations/${migration.migrationId}`,migration, {
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionKey}`
         }});
 
     return {
