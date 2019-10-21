@@ -4,7 +4,7 @@ using System.Text;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace qqkraken.model
+namespace QQKraken.Model
 {
     public class EvolutionPeriodCrosswalk
     {
