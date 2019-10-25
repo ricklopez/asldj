@@ -1,4 +1,7 @@
-import { FETCH_MIGRATIONS, FETCH_MIGRATION, CREATE_MIGRATION, TASK_COMPLETED, FETCH_PERIODS_MAPPINGS } from '../constants/action-types';
+import {
+    FETCH_PERIODS_MAPPINGS,
+    UPDATE_PERIOD_MAPPING
+} from '../constants/action-types';
 // import objectAssign from 'object-assign';
 import _ from 'lodash';
 
@@ -14,6 +17,8 @@ export default function(state = [], action) {
             } else {
                 return state;
             }
+        case UPDATE_PERIOD_MAPPING:
+            return state;
 
         default:
             return state;

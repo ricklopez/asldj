@@ -32,6 +32,20 @@ export function updateLobMapping(data) {
         type: types.UPDATE_LOB_MAPPING,
         payload: reqPromise
     };
+
+}export function updatePeriodMapping(data) {
+    sessionKey = data.token || sessionKey;
+    const reqPromise = axios.put(`${env.AUTH_ROOT_URL}/period-mappings`, data, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionKey}`
+
+        }});
+
+    return {
+        type: types.UPDATE_PERIOD_MAPPING,
+        payload: reqPromise
+    };
 }
 
 export function createStandUpDB(migration, data) {
