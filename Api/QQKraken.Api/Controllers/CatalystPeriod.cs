@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace QQKrakenAPI.Controllers
 {
     [Route("api/v1/catalyst-periods")]
-    [Authorize]
+        [Authorize]
     public class CatalystPeriodController : ControllerBase
     {
         //private readonly ProductsService _productService;

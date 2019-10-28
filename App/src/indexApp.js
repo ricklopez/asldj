@@ -12,6 +12,7 @@ import './index.css';
 import SignIn from './containers/Sign-In';
 import MigrationDetails from './containers/Migration-Details';
 import MigrationNew from './containers/Migration-New';
+import MigrationEdit from './containers/Migration-Edit';
 import MigrationAll from './containers/Migration-All';
 
 import Dashboard from './containers/Dashboard';
@@ -24,9 +25,6 @@ const store = createStore(reducers,composeWithDevTools(applyMiddleware(ReduxProm
 
 
 
-
-
-
 ReactDOM.render(
     <Provider store={store}>
         {/*<Provider store={createStoreWithMiddleware(reducers)}>*/}
@@ -35,6 +33,7 @@ ReactDOM.render(
                 <Switch>
                     <Route path="/migrations/:id" component={MigrationDetails} />
                     <Route path="/migration/new" component={MigrationNew} />
+                    <Route path="/migration/edit" component={MigrationEdit} />
                     <Route path="/migrations" component={MigrationAll} />
                     <Route path="/dashboard" component={Dashboard} store={store}/>
                     <Route exact path="/" component={Dashboard} store={store} />

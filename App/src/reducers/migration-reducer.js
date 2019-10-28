@@ -2,7 +2,10 @@ import { FETCH_MIGRATIONS, FETCH_MIGRATION, CREATE_MIGRATION, STANDUP_DB, UPDATE
 // import objectAssign from 'object-assign';
 import _ from 'lodash';
 
-export default function(state = {}, action) {
+export default function(state = {
+    standUpComplete:false,
+    migrationName: null
+}, action) {
 
     switch (action.type) {
 
@@ -11,7 +14,7 @@ export default function(state = {}, action) {
             return action.payload.data[0] ; //ES6
 
         case UPDATE_MIGRATION:
-
+            debugger;
             return state;
 
         case CREATE_MIGRATION:
@@ -21,7 +24,7 @@ export default function(state = {}, action) {
 
         case STANDUP_DB:
 
-            return state;
+            return {standUpComplete: true, ...state};
 
         default:
             return state;

@@ -29,6 +29,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "start-dev": "cross-env REACT_APP_STAGE=development REACT_APP_AUTH_ROOT_URL=https://localhost:44307/api/v1 react-scripts start",
+    "start-prod": "cross-env REACT_APP_STAGE=production REACT_APP_AUTH_ROOT_URL=http://5d834a49c9e3410014071357.mockapi.io/api/v1 react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

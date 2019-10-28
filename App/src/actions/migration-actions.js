@@ -2,6 +2,7 @@ import * as types from '../constants/action-types';
 import * as env from '../constants/app-environment';
 import axios from 'axios';
 
+
 let sessionKey = sessionStorage.getItem('adal.idtoken');
 
 
@@ -60,6 +61,22 @@ export function createMigration(data) {
         type: types.CREATE_MIGRATION,
         payload:reqPromise,
         meta: data
+    };
+
+}
+
+export function editMigration(migration, token) {
+    sessionKey = token || sessionKey;
+    console.log(migration.targetDate);
+    const reqPromise = axios.put(`${env.AUTH_ROOT_URL}/migrations/${migration.migrationId}`,migration, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionKey}`
+        }});
+
+    return {
+        type: types.STANDUP_DB,
+        payload: reqPromise
     };
 
 }

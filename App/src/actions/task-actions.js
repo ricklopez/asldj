@@ -2,6 +2,8 @@ import * as types from '../constants/action-types';
 import * as env from '../constants/app-environment';
 import axios from 'axios';
 let sessionKey = sessionStorage.getItem('adal.idtoken');
+
+
 export function completeTask(data) {
     sessionKey = data.token || sessionKey;
     const reqPromise = axios.put(`${env.AUTH_ROOT_URL}/migrations/${data.id}`,{
