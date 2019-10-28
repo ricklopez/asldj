@@ -36,7 +36,6 @@ function CountryCellRenderer(params) {
 }
 
 const columnsLOB = [
-    { field: 'migrationId', headerName: 'Migration Id', sortable: true, filter: true},
     { field: 'evolutionLOB', headerName: 'Client LOB', sortable: true, filter: true, actions:completeTask },
     {
         field: 'catalystLOB',
@@ -48,12 +47,12 @@ const columnsLOB = [
 ];
 
 const columnsPeriods = [
-    { field: 'migrationId', headerName: 'Migration Id', sortable: true, filter: true, editable:true},
     { field: 'evolutionPeriod', headerName: 'Client Period', sortable: true, filter: true},
     {
         field: 'catalystPeriod',
         headerName: 'Catalyst Period',
-        cellRendererFramework: PeriodCellRenderer},
+        cellRendererFramework: PeriodCellRenderer,
+        },
 ];
 
 

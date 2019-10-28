@@ -86,6 +86,8 @@ class MigrationRequestNew extends Component {
 
     render() {
         const { handleSubmit } = this.props;
+        if(this.props.initialValues.redirect)
+            this.props.history.push(`/migrations/${this.props.initialValues.migrationId}`);
         return (
             <div>
                 <CoreHeader></CoreHeader>

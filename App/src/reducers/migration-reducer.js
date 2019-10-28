@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 export default function(state = {
     standUpComplete:false,
+    redirect: false,
     migrationName: null
 }, action) {
 
@@ -14,8 +15,8 @@ export default function(state = {
             return action.payload.data[0] ; //ES6
 
         case UPDATE_MIGRATION:
-            debugger;
-            return state;
+
+            return {redirect: true, ...state};
 
         case CREATE_MIGRATION:
             console.log(action);

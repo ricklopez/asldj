@@ -67,7 +67,6 @@ export function createMigration(data) {
 
 export function editMigration(migration, token) {
     sessionKey = token || sessionKey;
-    console.log(migration.targetDate);
     const reqPromise = axios.put(`${env.AUTH_ROOT_URL}/migrations/${migration.migrationId}`,migration, {
         headers: {
             'Content-Type': 'application/json',
@@ -75,7 +74,7 @@ export function editMigration(migration, token) {
         }});
 
     return {
-        type: types.STANDUP_DB,
+        type: types.UPDATE_MIGRATION,
         payload: reqPromise
     };
 
