@@ -17,7 +17,6 @@ import MigrationAll from './containers/Migration-All';
 import Dashboard from './containers/Dashboard';
 import reducers from './reducers';
 import rootSaga from './sagas/index';
-import * as serviceWorker from './serviceWorker';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(reducers,composeWithDevTools(applyMiddleware(ReduxPromise, sagaMiddleware)));
