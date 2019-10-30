@@ -47,10 +47,11 @@ const columnsLOB = [
 ];
 
 const columnsPeriods = [
-    { field: 'evolutionPeriod', headerName: 'Client Period', sortable: true, filter: true},
+    { field: 'evolutionPeriod', headerName: 'Client Period', sortable: true, filter: true, width: 550,},
     {
         field: 'catalystPeriod',
         headerName: 'Catalyst Period',
+        width: 550,
         cellRendererFramework: PeriodCellRenderer,
         },
 ];
@@ -128,7 +129,7 @@ class MigrationDetails extends Component {
         }
         return (
             <div>
-                <AppHeader></AppHeader>
+                <AppHeader user={this.props.auth}></AppHeader>
                 <div className="container my-5">
                     <div className="row">
                         <div className="col">
@@ -234,7 +235,6 @@ class MigrationDetails extends Component {
                                             pagination= {true}
                                             deltaRowDataMode={true}
                                             // return id required for tree data and delta updates
-                                            treeData={true}
                                             getRowNodeId={data => data.migrationId}
                                             onCellValueChanged={this.onLobCellValueChanged}
                                             >
@@ -263,7 +263,6 @@ class MigrationDetails extends Component {
                                             pagination= {true}
                                             deltaRowDataMode={true}
                                             // return id required for tree data and delta updates
-                                            treeData={true}
                                             getRowNodeId={data => data.migrationId}
                                             onCellValueChanged={this.onPeriodCellValueChanged}
                                             >

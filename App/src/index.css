@@ -105,3 +105,68 @@ img.App-logo {
 
 .border-top { border-top: 1px solid #e5e5e5; }
 .border-bottom { border-bottom: 1px solid #e5e5e5; }
+
+.kraken-logo {
+  height: 80px;
+  text-align: center;
+  margin: 0 auto;
+  padding: 5%;
+}
+.kraken-logo-main {
+  max-height: 60px;
+  text-align: center;
+  margin: 0 auto 5px;
+}
+
+.App-header {
+  padding: 0;
+}
+
+.App {
+  text-align: center;
+}
+
+
+.App-header {
+  background-color: #222;
+  height: 80px;;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.jumbotron{
+  background-color: #fff;
+}
+
+
+.btn-outline-info {
+  color: #ed601a;
+  border-color: #ed601a;
+}
+
+.btn-outline-info:hover, .btn-outline-info:not(:disabled):not(.disabled):active, .btn-outline-info:not(:disabled):not(.disabled).active, .show > .btn-outline-info.dropdown-toggle {
+  color: #fff;
+  background-color: #ed601a;
+  border-color: #ed601a;
+}
+
+
+.btn-outline-info:focus, .btn-outline-info.focus, .btn-outline-info:not(:disabled):not(.disabled):active:focus {
+  box-shadow: 0 0 0 0.2rem rgba(237, 96, 26, 0.5);
+}
+
+.ag-react-container > select {
+  width: 100%
+}

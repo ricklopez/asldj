@@ -90,7 +90,7 @@ class MigrationRequestNew extends Component {
             this.props.history.push(`/migrations/${this.props.initialValues.migrationId}`);
         return (
             <div>
-                <CoreHeader></CoreHeader>
+                <CoreHeader user={this.props.auth}></CoreHeader>
                 <div className="jumbotron jumbotron-fluid jumbotron-white">
                     <div className="container">
                     </div>
@@ -157,7 +157,7 @@ class MigrationRequestNew extends Component {
                                 />
 
                                 <button  className="btn btn-outline-info btn-lg btn-block" type="submit">Create Migration</button>
-                                <Link to="/" className="btn btn-outline-danger btn-lg btn-block" >Cancel</Link>
+                                <Link to="/" className="btn btn-outline-secondary btn-lg btn-block" >Cancel</Link>
                             </form>
                         </div>
                     </div>

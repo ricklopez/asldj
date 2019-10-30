@@ -9,7 +9,6 @@ import createSagaMiddleware from 'redux-saga';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
-import SignIn from './containers/Sign-In';
 import MigrationDetails from './containers/Migration-Details';
 import MigrationNew from './containers/Migration-New';
 import MigrationEdit from './containers/Migration-Edit';
