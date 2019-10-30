@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import { fetchMigration, fetchLOBMappings, fetchPeriodMappings } from '../actions/migration-actions';
-import { completeTask, updateLobMapping, createStandUpDB } from '../actions/task-actions';
+import { completeTask, updateLobMapping, updatePeriodMapping, createStandUpDB } from '../actions/task-actions';
 import AppHeader from '../components/header';
 import loadingImg from '../assets/loading-one.gif';
 import Task from '../components/details-task.js';
@@ -12,7 +12,8 @@ import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import _ from 'lodash';
 import moment from 'moment';
-import NameCellRenderer from '../components/renderers/nameCellRenderer';
+import LobCellRenderer from '../components/renderers/lobCellRenderer';
+import PeriodCellRenderer from '../components/renderers/periodCellRenderer';
 
 function getCharCodeFromEvent(event) {
     event = event || window.event;
@@ -35,24 +36,26 @@ function CountryCellRenderer(params) {
 }
 
 const columnsLOB = [
-    { field: 'migrationId', headerName: 'Migration Id', sortable: true, filter: true},
     { field: 'evolutionLOB', headerName: 'Client LOB', sortable: true, filter: true, actions:completeTask },
     {
         field: 'catalystLOB',
         headerName: 'Catalyst LOB',
-        cellRendererFramework: NameCellRenderer},
+        cellRendererFramework: LobCellRenderer},
     { field: 'evolutionCoverage', headerName: 'Client Coverage', sortable: true, filter: true, editable:true},
     { field: 'displayName', headerName: 'Display Name', sortable: true, filter: true},
     { field: 'countOfClientRows', headerName: 'Count Client Rows', sortable: true, filter: true},
 ];
 
 const columnsPeriods = [
-    { field: 'migrationId', headerName: 'Migration Id', sortable: true, filter: true, editable:true},
-    { field: 'evolutionPeriod', headerName: 'Client Period', sortable: true, filter: true},
-    { field: 'catalystPeriod', headerName: 'Catalyst Period', sortable: true, filter: true, editable:true},
+    { field: 'evolutionPeriod', headerName: 'Client Period', sortable: true, filter: true, width: 550,},
+    {
+        field: 'catalystPeriod',
+        headerName: 'Catalyst Period',
+        width: 550,
+        cellRendererFramework: PeriodCellRenderer,
+        },
 ];
 
-// create your cellRenderer as a React component
 
 class MigrationDetails extends Component {
     constructor(props) {
@@ -65,10 +68,10 @@ class MigrationDetails extends Component {
 
     componentDidMount() {
         const { id } = this.props.match.params;
-        this.props.fetchMigration(id);
+        this.props.fetchMigration({id, token: this.props.auth.token});
 
-        this.props.fetchLOBMappings(id);
-        this.props.fetchPeriodMappings(id);
+        this.props.fetchLOBMappings({id, token: this.props.auth.token});
+        this.props.fetchPeriodMappings({id, token: this.props.auth.token});
 
     }
 
@@ -83,7 +86,7 @@ class MigrationDetails extends Component {
 
     onStandUp(event) {
         const { id } = this.props.match.params;
-        this.props.createStandUpDB(this.props.migration);
+        this.props.createStandUpDB(this.props.migration, this.props.auth);
     }
 
     onNotify(event) {
@@ -126,7 +129,7 @@ class MigrationDetails extends Component {
         }
         return (
             <div>
-                <AppHeader></AppHeader>
+                <AppHeader user={this.props.auth}></AppHeader>
                 <div className="container my-5">
                     <div className="row">
                         <div className="col">
@@ -232,9 +235,8 @@ class MigrationDetails extends Component {
                                             pagination= {true}
                                             deltaRowDataMode={true}
                                             // return id required for tree data and delta updates
-                                            treeData={true}
                                             getRowNodeId={data => data.migrationId}
-                                            onCellValueChanged={this.onCellValueChanged}
+                                            onCellValueChanged={this.onLobCellValueChanged}
                                             >
                                         </AgGridReact>
                                     </div>
@@ -261,11 +263,8 @@ class MigrationDetails extends Component {
                                             pagination= {true}
                                             deltaRowDataMode={true}
                                             // return id required for tree data and delta updates
-                                            treeData={true}
                                             getRowNodeId={data => data.migrationId}
-                                            onCellValueChanged= {(e) => {
-                                                console.log(e);
-                                            } }
+                                            onCellValueChanged={this.onPeriodCellValueChanged}
                                             >
                                         </AgGridReact>
                                     </div>
@@ -280,20 +279,29 @@ class MigrationDetails extends Component {
         );
     }
 
-    onCellValueChanged = (event) => {
-        console.log({...event.data});
-        this.props.updateLobMapping({...event.data});
+    onLobCellValueChanged = (event) => {
+        console.log(event.colDef.field);
+        this.props.updateLobMapping({...event.data, token: this.props.token});
     };
+
+    onPeriodCellValueChanged = (event) => {
+        console.log(event.colDef.field);
+        this.props.updatePeriodMapping({...event.data, token: this.props.token});
+    };
+
+
+
 
 }
 
 
 
-function mapStateToProps({ migration, lobMappings, periodsMappings }, ownProps) {
+function mapStateToProps({ migration, lobMappings, periodsMappings, auth }, ownProps) {
     return {
         migration: migration,
         lobs: lobMappings,
-        periods: periodsMappings
+        periods: periodsMappings,
+        auth: auth
     };
 }
 
@@ -304,6 +312,7 @@ function mapDispatchToProps(dispatch){
             fetchLOBMappings,
             fetchPeriodMappings,
             updateLobMapping,
+            updatePeriodMapping,
             completeTask,
             createStandUpDB
         }, dispatch);

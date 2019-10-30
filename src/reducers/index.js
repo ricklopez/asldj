@@ -7,12 +7,12 @@ import LOBMappings from './lob-mappings-reducer';
 import PeriodsMappings from './periods-mappings-reducer';
 
 const rootReducer = combineReducers({
-    signIn: SignIn,
+    auth: SignIn,
     form: formReducer,
     migrations: Migrations,
     migration: Migration,
     lobMappings: LOBMappings,
-    periodsMappings: PeriodsMappings,
+    periodsMappings: PeriodsMappings
 });
 
 export default rootReducer;

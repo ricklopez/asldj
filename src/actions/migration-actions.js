@@ -3,13 +3,16 @@ import * as env from '../constants/app-environment';
 import axios from 'axios';
 
 
+let sessionKey = sessionStorage.getItem('adal.idtoken');
 
 
 export function fetchMigrations(data) {
+    sessionKey = data.token || sessionKey;
     const headers = {
+        Authorization: `Bearer ${sessionKey}`
     };
 
-    const reqPromise = axios.get('http://localhost:51044/api/v1/migrations', {headers});
+    const reqPromise = axios.get(env.MIGRATIONS_URL, {headers} );
 
     return {
         type: types.FETCH_MIGRATIONS,
@@ -19,7 +22,11 @@ export function fetchMigrations(data) {
 
 
 export function fetchLOBMappings(data) {
-    const reqPromise = axios.get(`${env.MIGRATIONS_URL}/${data}/lob-mappings`);
+    sessionKey = data.token || sessionKey;
+    const headers = {
+        Authorization: `Bearer ${sessionKey}`
+    };
+    const reqPromise = axios.get(`${env.MIGRATIONS_URL}/${data.id}/lob-mappings`, {headers});
 
 
     return {
@@ -29,7 +36,11 @@ export function fetchLOBMappings(data) {
 }
 
 export function fetchPeriodMappings(data) {
-    const reqPromise = axios.get(`${env.MIGRATIONS_URL}/${data}/period-mappings`);
+    sessionKey = data.token || sessionKey;
+    const headers = {
+        Authorization: `Bearer ${sessionKey}`
+    };
+    const reqPromise = axios.get(`${env.MIGRATIONS_URL}/${data.id}/period-mappings`, {headers});
 
 
     return {
@@ -39,16 +50,9 @@ export function fetchPeriodMappings(data) {
 }
 
 export function createMigration(data) {
-    // if(data.tasks === undefined){
-    //     data.tasks = data.tasks;
-    // }
-    // const tasks = [];
-    // data.tasks.forEach((t) => {
-    //     tasks.push({name: t, complete: false});
-    // });
 
 
-    const reqPromise = axios.post('http://localhost:51044/api/v1/migrations',data, {
+    const reqPromise = axios.post(env.MIGRATIONS_URL,data, {
         headers: {
             'Content-Type': 'application/json'
         }});
@@ -61,8 +65,27 @@ export function createMigration(data) {
 
 }
 
-export function fetchMigration(id) {
-    const reqPromise = axios.get(`${env.MIGRATION_URL}/${id}?auth=xyz`);
+export function editMigration(migration, token) {
+    sessionKey = token || sessionKey;
+    const reqPromise = axios.put(`${env.AUTH_ROOT_URL}/migrations/${migration.migrationId}`,migration, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionKey}`
+        }});
+
+    return {
+        type: types.UPDATE_MIGRATION,
+        payload: reqPromise
+    };
+
+}
+
+export function fetchMigration(data) {
+    sessionKey = data.token || sessionKey;
+    const headers = {
+        Authorization: `Bearer ${sessionKey}`
+    };
+    const reqPromise = axios.get(`${env.MIGRATION_URL}/${data.id}`, {headers});
 
     return {
         type: types.FETCH_MIGRATION,

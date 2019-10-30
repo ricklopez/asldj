@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-//import { Link } from 'react-router-dom';
 import { fetchMigrations } from '../actions/migration-actions';
-import MigrationList from './Migration-List';
-import logo from '../logo.svg';
-import AppHeader from '../components/header';
+import logo from '../logo.png';
+import AppHeader from '../components/header-no-logo';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-balham.css';
 import {Link} from "react-router-dom";
-import moment from 'moment';
 import LinkCellRenderer from '../components/renderers/linkCellRenderer';
 
 const columns = [
@@ -32,21 +29,27 @@ const columns = [
     { field: 'createdAt', headerName: 'Created', sortable: true, filter: true}
 ];
 
+
 class Dashboard extends Component {
+
+    constructor(props) {
+        super(props);
+    }
     componentDidMount() {
-        this.props.fetchMigrations();
+        this.props.fetchMigrations({token: this.props.auth.token});
     }
 
     render() {
         const data = this.props.migrations || [];
         return (
             <div>
-                <AppHeader></AppHeader>
-                <nav className="col-md-2 d-none d-md-block bg-light sidebar">
+                <AppHeader user={this.props.auth}></AppHeader>
+
+                <nav className="col-md-2 d-none d-md-block bg-light sidebar text-center">
                     <div className="bg-dark">
-                        <img src={logo} className="App-logo m-auto" alt="logo" />
+                        <img src={logo} className="kraken-logo"  id="octopusLogo" alt="logo" />
                     </div>
-                    <div className="sidebar-sticky">
+                    <div className="sidebar-sticky text-left">
                         <ul className="nav flex-column">
                             <li className="nav-item">
                                 <a className="nav-link active" href="./dashboard">
@@ -113,7 +116,8 @@ class Dashboard extends Component {
 
 function mapStateToProps(state) {
     return {
-        migrations: state.migrations
+        migrations: state.migrations,
+        auth: state.auth
     };
 }
 

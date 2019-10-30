@@ -1,6 +1,4 @@
 import React from 'react';
-// eslint-disable-next-line
-import _ from 'lodash';
 
 
 export default (props) => {

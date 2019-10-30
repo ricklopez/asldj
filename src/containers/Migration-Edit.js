@@ -1,16 +1,42 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { createMigration } from '../actions/migration-actions'
+import {editMigration, fetchMigrations} from '../actions/migration-actions'
 import { Link } from 'react-router-dom';
 import CoreHeader from '../components/header'
 import './Migration-New.css';
+import moment from "moment";
 const phase = {"label": "Phase", "multiple": false, "data": ['Phase One', 'Phase Two', 'Phase Three', 'Phase Four']};
 const completed = {"label": "Completed", "multiple": false, "data": ['True','False']};
 const tasks = {"label": "Tasks (select multiple)", "multiple": true, "data": ['A', 'B', 'C', 'D']};
 const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
 
 class MigrationRequestNew extends Component {
+
+    componentWillMount(nextProps) {
+        const { change } = this.props;
+        const values = this.props.initialValues;
+        if (values !== null) {
+            console.log(values);
+            for (let item in values) {
+                change(item, values[item]);
+
+            }
+            // change('migrationName', values.migrationName);
+            // change('sourceHostName', values.sourceHostName);
+        }
+    }
+
+    // componentWillReceiveProps(nextProps) {
+    //     const { change } = this.props;
+    //     const values = nextProps.initialValues;
+    //     if (values !== null) {
+    //         console.log(values);
+    //         change('migrationName', values.migrationName);
+    //         change('sourceHostName', values.sourceHostName);
+    //     }
+    // }
 
     renderSelector(input, list){
         const { meta: {touched, error }} = input;
@@ -32,6 +58,9 @@ class MigrationRequestNew extends Component {
         )};
 
     renderField(field) {
+        // console.log(field);
+        if (field.type === 'date')
+            field.input.value = moment(field.input.value).format('YYYY-MM-DD');
         const { meta: {touched, error }} = field;
         const className = `form-group ${touched && error ? 'has-error' : ''}`;
         return(
@@ -40,6 +69,7 @@ class MigrationRequestNew extends Component {
                 <input
                     className="form-control"
                     type = {field.type}
+                    placeholder={field.placeholder}
                     {...field.input}
                 />
                 <div className="text-help">
@@ -50,16 +80,17 @@ class MigrationRequestNew extends Component {
     }
 
     onSubmit(values) {
-
-        this.props.createLoanRequest(values);
+        this.props.editMigration(values, this.props.auth.token);
     }
 
 
     render() {
         const { handleSubmit } = this.props;
+        if(this.props.initialValues.redirect)
+            this.props.history.push(`/migrations/${this.props.initialValues.migrationId}`);
         return (
             <div>
-                <CoreHeader></CoreHeader>
+                <CoreHeader user={this.props.auth}></CoreHeader>
                 <div className="jumbotron jumbotron-fluid jumbotron-white">
                     <div className="container">
                     </div>
@@ -67,7 +98,7 @@ class MigrationRequestNew extends Component {
                 <div className="container">
                     <div className="row justify-content-md-center">
                         <div className="col-6">
-                            <h2 className="text-center">Create New Migration</h2>
+                            <h2 className="text-center">Edit Migration</h2>
                             <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                                 <Field
                                     label="Name"
@@ -117,14 +148,7 @@ class MigrationRequestNew extends Component {
                                     type="text"
                                     component={this.renderField}
                                 />
-                                <Field
-                                    name="isPhase1"
-                                    component={(e) => this.renderSelector(e, phase)}
-                                />
-                                <Field
-                                    name="isPhase4"
-                                    component={(e) => this.renderSelector(e, completed)}
-                                />
+
                                 <Field
                                     label="Target Date"
                                     name="targetDate"
@@ -133,7 +157,7 @@ class MigrationRequestNew extends Component {
                                 />
 
                                 <button  className="btn btn-outline-info btn-lg btn-block" type="submit">Create Migration</button>
-                                <Link to="/" className="btn btn-outline-danger btn-lg btn-block" >Cancel</Link>
+                                <Link to="/" className="btn btn-outline-secondary btn-lg btn-block" >Cancel</Link>
                             </form>
                         </div>
                     </div>
@@ -159,8 +183,24 @@ function validate(values){
     return errors;
 }
 
+const mapStateToProps = state => ({
+    initialValues: state.migration,
+    auth:state.auth
+})
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+        editMigration
+    }, dispatch);
+}
+
+MigrationRequestNew = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MigrationRequestNew)
+
 export default reduxForm({
-    form: 'MigrationRequestNewForm' // Make sure this is unique
+    form: 'MigrationRequestEditForm' // Make sure this is unique
 })(
-    connect(null, {createLoanRequest: createMigration})(MigrationRequestNew)
+    connect(mapStateToProps, mapDispatchToProps)(MigrationRequestNew)
 );
