@@ -15,4 +15,4 @@ export const authContext = new AuthenticationContext(adalConfig);
 export const adalApiFetch = (fetch, url, options) =>
     adalFetch(authContext, adalConfig.endpoints.api, fetch, url, options);
 
-export const user = {...authContext.getCachedUser(), token:sessionStorage.getItem('adal.idtoken') };
+export const user = {...authContext.getCachedUser()cd , token:sessionStorage.getItem('adal.idtoken') };
