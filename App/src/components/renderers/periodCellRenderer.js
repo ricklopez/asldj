@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import axios from "axios";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as env from "../../constants/app-environment";
 
 let sessionKey = sessionStorage.getItem('adal.idtoken');
@@ -36,7 +37,7 @@ export default class PeriodCellRenderer extends Component {
 
     onChange = (e) => {
         this.props.setValue(e.target.value);
-    }
+    };
 
 
     render() {
@@ -45,10 +46,16 @@ export default class PeriodCellRenderer extends Component {
             return <option key={index} value={item.periodValue}>{item.periodName}</option>
         });
 
+        const shouldSpin = this.state.periods.length <    1;
+
         return (
-            <select value={this.props.value} onChange={this.onChange}>
-                {optionsList}
-            </select>
-        );
+            <React.Fragment>
+                {shouldSpin ? (
+                    <FontAwesomeIcon icon="spinner" spin/>) : (
+                    <select value={this.props.value} onChange={this.onChange}>
+                        {optionsList}
+                    </select>
+                )}
+            </React.Fragment>);
     }
 }

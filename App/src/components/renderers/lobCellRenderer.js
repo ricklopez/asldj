@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import axios from "axios";
 import * as env from "../../constants/app-environment";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 let sessionKey = sessionStorage.getItem('adal.idtoken');
 
@@ -37,7 +38,7 @@ export default class LobCellRenderer extends Component {
 
     onChange = (e) => {
         this.props.setValue(e.target.value);
-    }
+    };
 
 
     render() {
@@ -46,11 +47,16 @@ export default class LobCellRenderer extends Component {
             return <option key={index} value={item.internalCode}>{item.lob}</option>
         });
 
+        const shouldSpin = this.state.lobs.length <    1;
 
         return (
-            <select value={this.props.value} onChange={this.onChange}>
-                {optionsList}
-            </select>
-        );
+            <React.Fragment>
+                {shouldSpin ? (
+                    <FontAwesomeIcon icon="spinner" spin/>) : (
+                    <select value={this.props.value} onChange={this.onChange}>
+                        {optionsList}
+                    </select>
+                )}
+            </React.Fragment>);
     }
 }

@@ -18,6 +18,13 @@ import Dashboard from './containers/Dashboard';
 import reducers from './reducers';
 import rootSaga from './sagas/index';
 
+
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fab, faReact, faMicrosoft, faJs } from '@fortawesome/free-brands-svg-icons';
+import { faSpinner, faHeart} from '@fortawesome/free-solid-svg-icons';
+
+library.add(fab, faReact, faMicrosoft, faJs, faSpinner, faHeart);
+
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(reducers,composeWithDevTools(applyMiddleware(ReduxPromise, sagaMiddleware)));
 
