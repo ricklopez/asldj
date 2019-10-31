@@ -1,6 +1,7 @@
-import { UPDATE_LOB_MAPPING, FETCH_MIGRATIONS, FETCH_MIGRATION, CREATE_MIGRATION, TASK_COMPLETED, FETCH_LOB_MAPPINGS } from '../constants/action-types';
+import { UPDATE_LOB_MAPPING, FETCH_LOB_MAPPINGS } from '../constants/action-types';
+
 // import objectAssign from 'object-assign';
-import _ from 'lodash';
+//import _ from 'lodash';
 
 export default function(state = [], action) {
 
@@ -9,7 +10,10 @@ export default function(state = [], action) {
 
         case FETCH_LOB_MAPPINGS:
             if (action.payload.status === 200 && action.payload.data) {
-                return action.payload.data;//_.mapKeys(action.payload.data, 'id');
+                return action.payload.data.map((item, index) => {
+                    item.id = index;
+                    return { ...item};
+                });
             } else {
                 return state;
             }

@@ -2,15 +2,12 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {editMigration, fetchMigrations} from '../actions/migration-actions'
+import {editMigration} from '../actions/migration-actions'
 import { Link } from 'react-router-dom';
 import CoreHeader from '../components/header'
 import './Migration-New.css';
 import moment from "moment";
-const phase = {"label": "Phase", "multiple": false, "data": ['Phase One', 'Phase Two', 'Phase Three', 'Phase Four']};
-const completed = {"label": "Completed", "multiple": false, "data": ['True','False']};
-const tasks = {"label": "Tasks (select multiple)", "multiple": true, "data": ['A', 'B', 'C', 'D']};
-const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
+
 
 class MigrationRequestNew extends Component {
 
@@ -18,7 +15,6 @@ class MigrationRequestNew extends Component {
         const { change } = this.props;
         const values = this.props.initialValues;
         if (values !== null) {
-            console.log(values);
             for (let item in values) {
                 change(item, values[item]);
 
@@ -28,15 +24,6 @@ class MigrationRequestNew extends Component {
         }
     }
 
-    // componentWillReceiveProps(nextProps) {
-    //     const { change } = this.props;
-    //     const values = nextProps.initialValues;
-    //     if (values !== null) {
-    //         console.log(values);
-    //         change('migrationName', values.migrationName);
-    //         change('sourceHostName', values.sourceHostName);
-    //     }
-    // }
 
     renderSelector(input, list){
         const { meta: {touched, error }} = input;
@@ -58,7 +45,7 @@ class MigrationRequestNew extends Component {
         )};
 
     renderField(field) {
-        // console.log(field);
+
         if (field.type === 'date')
             field.input.value = moment(field.input.value).format('YYYY-MM-DD');
         const { meta: {touched, error }} = field;
@@ -167,21 +154,21 @@ class MigrationRequestNew extends Component {
     }
 }
 
-function validate(values){
-    //Error State
-    const errors = {};
-
-    // Check Inputs with our custom validations
-    if (!values.title || values.title.length < 3) {
-        errors.title = "Enter a valid title. Must be at least 3 characters.";
-    }
-    if (!values.type) {
-        errors.type = 'Enter a type';
-    }
-
-    // Return error state
-    return errors;
-}
+// function validate(values){
+//     //Error State
+//     const errors = {};
+//
+//     // Check Inputs with our custom validations
+//     if (!values.title || values.title.length < 3) {
+//         errors.title = "Enter a valid title. Must be at least 3 characters.";
+//     }
+//     if (!values.type) {
+//         errors.type = 'Enter a type';
+//     }
+//
+//     // Return error state
+//     return errors;
+// }
 
 const mapStateToProps = state => ({
     initialValues: state.migration,

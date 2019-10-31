@@ -24,12 +24,10 @@ class SignIn extends Component {
 
     onUserEmailInputChange(event) {
         this.setState({ useremail: event.target.value });
-        console.log(this.state.useremail)
     }
 
     onPasswordInputChange(event) {
         this.setState({ password: event.target.value });
-        console.log(this.state.password)
     }
 
     onFormSubmit(event) {

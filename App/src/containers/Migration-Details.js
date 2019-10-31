@@ -15,28 +15,11 @@ import moment from 'moment';
 import LobCellRenderer from '../components/renderers/lobCellRenderer';
 import PeriodCellRenderer from '../components/renderers/periodCellRenderer';
 
-function getCharCodeFromEvent(event) {
-    event = event || window.event;
-    return (typeof event.which == "undefined") ? event.keyCode : event.which;
-}
 
-function isCharNumeric(charStr) {
-    return !!/\d/.test(charStr);
-}
 
-function isKeyPressedNumeric(event) {
-    var charCode = getCharCodeFromEvent(event);
-    var charStr = String.fromCharCode(charCode);
-    return isCharNumeric(charStr);
-}
-
-// simple function cellRenderer, just returns back the name of the country
-function CountryCellRenderer(params) {
-    return params.value.name;
-}
 
 const columnsLOB = [
-    { field: 'evolutionLOB', headerName: 'Client LOB', sortable: true, filter: true, actions:completeTask },
+    { field: 'evolutionLOB', headerName: 'Client LOB', sortable: true, filter: true},
     {
         field: 'catalystLOB',
         headerName: 'Catalyst LOB',
@@ -62,16 +45,14 @@ class MigrationDetails extends Component {
         super(props);
         this.onTaskClick = this.onTaskClick.bind(this);
         this.onStandUp = this.onStandUp.bind(this);
-        this.onNotify = this.onNotify.bind(this);
-        this.CountryCellRenderer = this.CountryCellRenderer.bind(this);
     }
 
     componentDidMount() {
         const { id } = this.props.match.params;
         this.props.fetchMigration({id, token: this.props.auth.token});
-
         this.props.fetchLOBMappings({id, token: this.props.auth.token});
         this.props.fetchPeriodMappings({id, token: this.props.auth.token});
+
 
     }
 
@@ -85,18 +66,9 @@ class MigrationDetails extends Component {
     }
 
     onStandUp(event) {
-        const { id } = this.props.match.params;
         this.props.createStandUpDB(this.props.migration, this.props.auth);
     }
 
-    onNotify(event) {
-
-    }
-
-    CountryCellRenderer(params) {
-
-        return params.value.name;
-    }
 
     renderTasks() {
 
@@ -235,7 +207,7 @@ class MigrationDetails extends Component {
                                             pagination= {true}
                                             deltaRowDataMode={true}
                                             // return id required for tree data and delta updates
-                                            getRowNodeId={data => data.migrationId}
+                                            getRowNodeId={data => data.id}
                                             onCellValueChanged={this.onLobCellValueChanged}
                                             >
                                         </AgGridReact>
@@ -263,7 +235,7 @@ class MigrationDetails extends Component {
                                             pagination= {true}
                                             deltaRowDataMode={true}
                                             // return id required for tree data and delta updates
-                                            getRowNodeId={data => data.migrationId}
+                                            getRowNodeId={data => data.id}
                                             onCellValueChanged={this.onPeriodCellValueChanged}
                                             >
                                         </AgGridReact>
@@ -280,12 +252,10 @@ class MigrationDetails extends Component {
     }
 
     onLobCellValueChanged = (event) => {
-        console.log(event.colDef.field);
         this.props.updateLobMapping({...event.data, token: this.props.token});
     };
 
     onPeriodCellValueChanged = (event) => {
-        console.log(event.colDef.field);
         this.props.updatePeriodMapping({...event.data, token: this.props.token});
     };
 

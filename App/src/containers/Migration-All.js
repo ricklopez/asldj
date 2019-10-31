@@ -78,7 +78,6 @@ class Dashboard extends Component {
                                 columnDefs={columns}
                                 rowData={data}
                                 pagination= {true}
-                                onRowClicked= {(e) => {console.log(e)}}
                             />
                             </div>
                         </div>

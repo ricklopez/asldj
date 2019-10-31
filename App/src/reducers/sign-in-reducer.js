@@ -1,7 +1,7 @@
 import { SIGN_IN } from '../constants/action-types';
 import objectAssign from 'object-assign';
 import { user  } from '../adlConfig';
-import { AuthenticationContext, adalFetch, withAdalLogin } from 'react-adal';
+//import { AuthenticationContext, adalFetch, withAdalLogin } from 'react-adal';
 
 export default function(state = {...user }, action) {
     switch (action.type) {

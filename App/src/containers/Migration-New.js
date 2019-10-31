@@ -5,10 +5,6 @@ import { createMigration } from '../actions/migration-actions'
 import { Link } from 'react-router-dom';
 import CoreHeader from '../components/header'
 import './Migration-New.css';
-const phase = {"label": "Phase", "multiple": false, "data": ['Phase One', 'Phase Two', 'Phase Three', 'Phase Four']};
-const completed = {"label": "Completed", "multiple": false, "data": ['True','False']};
-const tasks = {"label": "Tasks (select multiple)", "multiple": true, "data": ['A', 'B', 'C', 'D']};
-const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined;
 
 class MigrationRequestNew extends Component {
 
@@ -134,21 +130,21 @@ class MigrationRequestNew extends Component {
     }
 }
 
-function validate(values){
-    //Error State
-    const errors = {};
-
-    // Check Inputs with our custom validations
-    if (!values.title || values.title.length < 3) {
-        errors.title = "Enter a valid title. Must be at least 3 characters.";
-    }
-    if (!values.type) {
-        errors.type = 'Enter a type';
-    }
-
-    // Return error state
-    return errors;
-}
+// function validate(values){
+//     //Error State
+//     const errors = {};
+//
+//     // Check Inputs with our custom validations
+//     if (!values.title || values.title.length < 3) {
+//         errors.title = "Enter a valid title. Must be at least 3 characters.";
+//     }
+//     if (!values.type) {
+//         errors.type = 'Enter a type';
+//     }
+//
+//     // Return error state
+//     return errors;
+// }
 
 const mapStateToProps = state => ({
     migration: state.migration,

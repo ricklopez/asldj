@@ -32,9 +32,6 @@ const columns = [
 
 class Dashboard extends Component {
 
-    constructor(props) {
-        super(props);
-    }
     componentDidMount() {
         this.props.fetchMigrations({token: this.props.auth.token});
     }
@@ -66,9 +63,6 @@ class Dashboard extends Component {
 
                         <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                             <span><a href={"./reports.html"}>Reports</a></span>
-                            <a className="d-flex align-items-center text-muted" href="#">
-                                <span data-feather="plus-circle"></span>
-                            </a>
                         </h6>
 
                     </div>
@@ -102,7 +96,6 @@ class Dashboard extends Component {
                                         columnDefs={columns}
                                         rowData={data}
                                         pagination= {true}
-                                        onRowClicked= {(e) => {console.log(e)}}
                                     />
                                 </div>
                             </div>

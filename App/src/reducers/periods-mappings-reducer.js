@@ -3,7 +3,7 @@ import {
     UPDATE_PERIOD_MAPPING
 } from '../constants/action-types';
 // import objectAssign from 'object-assign';
-import _ from 'lodash';
+//import _ from 'lodash';
 
 export default function(state = [], action) {
 
@@ -11,9 +11,8 @@ export default function(state = [], action) {
 
 
         case FETCH_PERIODS_MAPPINGS:
-            console.log('Reducer: ', action);
             if (action.payload.status === 200 && action.payload.data) {
-                return action.payload.data;//_.mapKeys(action.payload.data, 'id');
+                return action.payload.data.map((item, index) => {return { id: index, ...item};});
             } else {
                 return state;
             }

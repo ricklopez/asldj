@@ -1,6 +1,6 @@
-import { FETCH_MIGRATIONS, FETCH_MIGRATION, CREATE_MIGRATION, STANDUP_DB, UPDATE_MIGRATION, FETCH_MAPPINGS } from '../constants/action-types';
+import { FETCH_MIGRATION, CREATE_MIGRATION, STANDUP_DB, UPDATE_MIGRATION } from '../constants/action-types';
 // import objectAssign from 'object-assign';
-import _ from 'lodash';
+//import _ from 'lodash';
 
 export default function(state = {
     standUpComplete:false,
@@ -19,8 +19,6 @@ export default function(state = {
             return {redirect: true, ...state};
 
         case CREATE_MIGRATION:
-            console.log(action);
-            debugger;
             return {migrationId: action.payload.data[0], ...action.meta};
 
         case STANDUP_DB:

@@ -1,7 +1,6 @@
 import React from 'react';
 import { authContext } from '../adlConfig';
-import logo from "../logo.png";
-import { Link } from 'react-router-dom';
+
 export default (props) => {
     return(
         <div className="App">
@@ -11,9 +10,9 @@ export default (props) => {
                         Hello, {props.user.profile.given_name}
                     </div>
                     <div className="col float-right my-3">
-                        <a onClick={() => authContext.logOut()}>
+                        <span onClick={() => authContext.logOut()}>
                         Logout
-                    </a>
+                    </span>
                     </div>
                 </div>
             </header>

@@ -15,8 +15,8 @@ export default (props) => {
                     </div>
                     <div className="col float-right my-3">
                         {props.user.profile.given_name + '  '}    | {'  '}
-                        <a onClick={() => authContext.logOut() }>Logout
-                    </a>
+                        <span onClick={() => authContext.logOut() }>Logout
+                    </span>
                     </div>
                 </div>
             </header>
