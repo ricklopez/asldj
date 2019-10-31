@@ -56,7 +56,7 @@ export function createMigration(data) {
         headers: {
             'Content-Type': 'application/json'
         }});
-    debugger;
+
     return {
         type: types.CREATE_MIGRATION,
         payload:reqPromise,

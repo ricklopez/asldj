@@ -35,7 +35,6 @@ namespace QQKrakenAPI.Controllers
             {
                 await connection.OpenAsync();
                 var result = await connection.QueryAsync<EvolutionPeriodCrosswalk>(@"SELECT * FROM Evolution_PeriodCrosswalk");
-                //var result = await connection.QueryAsync<Migration>(@"SELECT * FROM Migrations");
 
 
 

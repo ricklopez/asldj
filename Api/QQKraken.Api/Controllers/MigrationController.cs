@@ -11,6 +11,7 @@ using Dapper;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Authorization;
 using System.Data.SqlClient;
+using System.Data;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -48,8 +49,7 @@ namespace QQKrakenAPI.Controllers
                     + " @IsPreprocessed, @BlankCostValue, @CsrNotes," 
                     + " @PlannedMigrationDate, @EstimatedCleanupDate, @MigrationDate, @BeginProcesDate, @LastProcessDate )";
 
-                await connection.OpenAsync();
-                var result = await connection.QueryAsync<int>(sQuery, new
+                var data = new
                 {
                     MigrationName = m.MigrationName,
                     MigrationTypeID = 1,
@@ -81,7 +81,9 @@ namespace QQKrakenAPI.Controllers
                     LastProcessDate = "2011-07-01T15:17:33.357",
                     MigrationDate = "2011-07-01T15:17:33.357",
                     BeginProcesDate = "2011-07-01T15:17:33.357"
-                });
+                };
+                await connection.OpenAsync();
+                var result = await connection.QueryAsync<int>(sQuery, data);
 
 
 
@@ -99,7 +101,6 @@ namespace QQKrakenAPI.Controllers
             {
                 await connection.OpenAsync();
                 var result = await connection.QueryAsync<Migration>(@"SELECT * FROM Migrations");
-                //var result = await connection.QueryAsync<Migration>(@"SELECT * FROM Migrations");
 
 
 
@@ -119,7 +120,6 @@ namespace QQKrakenAPI.Controllers
                                + " WHERE MigrationID = @Id";
                 await connection.OpenAsync();
                 var result = await connection.QueryAsync<Migration>(sQuery, new { Id = id });
-                //var result = await connection.QueryAsync<Migration>(@"SELECT * FROM Migrations");
 
 
 

@@ -10,6 +10,7 @@ using Dapper;
 using QQKraken.Model;
 using System.Data.SqlClient;
 using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -33,7 +34,8 @@ namespace QQKrakenAPI.Controllers
             using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();
-                var result = connection.Query<CatalysePeriod>(@"SELECT * FROM Catalyst_Periods");
+                //var result = connection.Query<CatalysePeriod>(@"SELECT * FROM Catalyst_Periods");
+                var result = connection.Query<CatalysePeriod>("App_Sel_ValueNamePairs", new { PairName = "Catalyst_Periods", IntVar1 = 0, StrVar1=" " }, commandType: CommandType.StoredProcedure);
 
 
 
