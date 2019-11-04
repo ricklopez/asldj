@@ -1,4 +1,4 @@
-﻿namespace Example.Api.Constants
+﻿namespace QQKraken.Api.Constants
 {
     public static class AzureAdClaimTypes
     {
