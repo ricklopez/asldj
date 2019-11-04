@@ -1,14 +1,39 @@
 import { AuthenticationContext, adalFetch } from 'react-adal';
+import * as env from './constants/app-environment';
 
-export const adalConfig =  {
+
+let redirectUrl = './dashboard';
+
+switch (window.location.hostname) {
+    case 'qqmigration.qqsolutions.com':
+        redirectUrl = 'https://qqmigration.qqsolutions.com/dashboard';
+        break;
+    case 'qqmigration-qa.qqsolutions.com':
+        redirectUrl = 'https://qqmigration-qa.qqsolutions.com/dashboard';
+        break;
+    case 'qqmigration-dev.qqsolutions.com':
+        redirectUrl = 'https://qqmigration-dev.qqsolutions.com/dashboard';
+        break;
+    case 'localhost':
+        redirectUrl = 'http://localhost:3000/dashboard';
+        break;
+    default:
+        redirectUrl = 'http://localhost:3000/dashboard';
+        break;
+}
+
+const adlConfigValue = {
     tenant: '9abc9a0d-17f0-4f74-9195-ec797d5dd726',
     clientId: 'fe92e92e-24c3-4eab-870b-49b1308d46b9',
-    redirectUri: process.env.NODE_ENV === 'production' ? 'https://qqmigration-dev.qqsolutions.com/dashboard' :  'http://localhost:3000/dashboard',
+    redirectUri: redirectUrl,
     endpoints: {
-        api:  process.env.NODE_ENV === 'production' ? `${process.env.REACT_APP_AUTH_ROOT_URL}/api/v1/User/current` : 'https://localhost:44307/api/User/current'
+        api: `${env.AUTH_ROOT_URL}/User/current`
     },
     cacheLocation: 'sessionStorage'
 };
+
+
+export const adalConfig = adlConfigValue;
 
 export const authContext = new AuthenticationContext(adalConfig);
 
