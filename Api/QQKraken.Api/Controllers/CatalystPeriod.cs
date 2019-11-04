@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Configuration;
-using Dapper;
-using QQKraken.Model;
-using System.Data.SqlClient;
+﻿using Dapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using QQKraken.Model;
+using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace QQKrakenAPI.Controllers
 {
     [Route("api/v1/catalyst-periods")]
-        [Authorize]
+    [Authorize]
     public class CatalystPeriodController : ControllerBase
     {
         //private readonly ProductsService _productService;
@@ -35,7 +30,7 @@ namespace QQKrakenAPI.Controllers
             {
                 connection.Open();
                 //var result = connection.Query<CatalysePeriod>(@"SELECT * FROM Catalyst_Periods");
-                var result = connection.Query<CatalysePeriod>("App_Sel_ValueNamePairs", new { PairName = "Catalyst_Periods", IntVar1 = 0, StrVar1=" " }, commandType: CommandType.StoredProcedure);
+                var result = connection.Query<CatalysePeriod>("App_Sel_ValueNamePairs", new { PairName = "Catalyst_Periods", IntVar1 = 0, StrVar1 = " " }, commandType: CommandType.StoredProcedure);
 
 
 
