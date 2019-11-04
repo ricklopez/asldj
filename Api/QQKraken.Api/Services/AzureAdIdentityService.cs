@@ -1,15 +1,9 @@
-﻿using Example.Api.Constants;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using QQKraken.Api.Constants;
 using System.Linq;
 
-namespace Example.Api.Services
+namespace QQKraken.Api.Services
 {
-    public interface IIdentityService
-    {
-        bool IsAuthenticated();
-        string GetMail();
-        string GetId();
-    }
 
     public class AzureAdIdentityService : IIdentityService
     {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel.DataAnnotations;
-
-
-namespace QQKraken.Model
+﻿namespace QQKraken.Model
 {
     public class CatalysePeriod
     {

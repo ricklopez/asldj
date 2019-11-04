@@ -1,4 +1,4 @@
-﻿namespace Example.Api.Configuration
+﻿namespace QQKraken.Api.Configuration
 {
     public class AzureAdOptions
     {

@@ -1,17 +1,17 @@
-﻿using Example.Api.Configuration;
-using Example.Api.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using QQKraken.Api.Configuration;
+using QQKraken.Api.Services;
 using Swashbuckle.AspNetCore.Swagger;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Example.Api
+namespace QQKraken.Api
 {
     public class Startup
     {

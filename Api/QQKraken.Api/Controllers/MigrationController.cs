@@ -1,40 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using QQKraken.Model;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Configuration;
-using Dapper;
-using Microsoft.AspNetCore.Cors;
+﻿using Dapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using QQKraken.Model;
+using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Data;
+using System.Threading.Tasks;
 
-// For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-
-namespace QQKrakenAPI.Controllers
+namespace QQKraken.Api.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/v1/migrations")]
     public class MigrationController : ControllerBase
     {
-        //private readonly ProductsService _productService;
         private readonly IConfiguration _configuration;
+
+        //TODO: Create a service and inject
         public MigrationController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-        // POST: api/values
         [HttpPost]
         public async Task<IEnumerable<int>> Add(Migration m)
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
- 
+
 
                 string sQuery = "INSERT INTO Migrations"
                     + "(MigrationName, MigrationTypeID, SourceHostName, SourceDb, SourceSchema, SourceXmlCount,"
@@ -46,7 +39,7 @@ namespace QQKrakenAPI.Controllers
                     + " VALUES(@MigrationName, @MigrationTypeID, @SourceHostName, @SourceDb, @SourceSchema, @SourceXmlCount,"
                     + " @DestDbHostName, @DestDb, @DestSchema, @DestQqID, @IsPhase1, @IsPhase2, @IsPhase3, @IsPhase4, @IsPhase5, @IsPhase6, "
                     + " @AcordAgencyLine1, @AcordAgencyLine2, @AcordAgencyLine3, @AgencyPhoneLine, @AgencyFaxLine, @AgencyEmailLine,"
-                    + " @IsPreprocessed, @BlankCostValue, @CsrNotes," 
+                    + " @IsPreprocessed, @BlankCostValue, @CsrNotes,"
                     + " @PlannedMigrationDate, @EstimatedCleanupDate, @MigrationDate, @BeginProcesDate, @LastProcessDate )";
 
                 var data = new
@@ -93,7 +86,6 @@ namespace QQKrakenAPI.Controllers
 
         }
 
-        // GET: api/values
         [HttpGet]
         public async Task<IEnumerable<Migration>> GetAll()
         {
@@ -110,7 +102,6 @@ namespace QQKrakenAPI.Controllers
 
         }
 
-        // GET: api/values
         [HttpGet("{id}")]
         public async Task<IEnumerable<Migration>> GetById(int id)
         {
@@ -128,8 +119,7 @@ namespace QQKrakenAPI.Controllers
 
 
         }
-            
-        // GET: api/values
+
         [HttpPut("{id}")]
         public async Task<ActionResult<Migration>> Update([FromBody] Migration m)
         {
@@ -144,10 +134,9 @@ namespace QQKrakenAPI.Controllers
                                + " IsPhase3 = @IsPhase3, IsPhase4 = @IsPhase4 "
                                + " WHERE MigrationId = @MigrationId";
 
-                //string sQuery = " UPDATE Migrations SET MigrationName = 'Del Toro Insu' WHERE MigrationID = 956";
-
                 await connection.OpenAsync();
-                var result = await connection.ExecuteAsync(sQuery, new { 
+                var result = await connection.ExecuteAsync(sQuery, new
+                {
                     Id = m.MigrationId,
                     MigrationId = m.MigrationId,
                     MigrationName = m.MigrationName,
@@ -165,9 +154,6 @@ namespace QQKrakenAPI.Controllers
                     IsPhase4 = m.IsPhase4,
                     TargetDate = m.TargetDate
                 });
-                //var result = await connection.QueryAsync<Migration>(@"SELECT * FROM Migrations");
-
-
 
                 return Ok();
             }
@@ -175,41 +161,33 @@ namespace QQKrakenAPI.Controllers
 
         }
 
-        // GET: api/values
         [HttpGet("{id}/lob-mappings")]
         public async Task<IEnumerable<EvolutionLobCrosswalk>> GetAllLobMappings(int id)
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 await connection.OpenAsync();
-                ///var result = await connection.QueryAsync<Migration>(@"SELECT * FROM Evolution_LobCrosswalk");
-                //var result = await connection.QueryAsync<Migration>(@"SELECT * FROM Migrations");
 
                 string sQuery = "SELECT * FROM Evolution_LobCrosswalk"
                                + " WHERE MigrationID = @Id";
-                //dbConnection.Open();
+
                 return await connection.QueryAsync<EvolutionLobCrosswalk>(sQuery, new { Id = id });
             }
 
 
         }
 
-        // GET: api/values
         [HttpGet("{id}/period-mappings")]
         public async Task<IEnumerable<EvolutionPeriodCrosswalk>> GetAllPeriodMappings(int id)
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 await connection.OpenAsync();
-                ///var result = await connection.QueryAsync<Migration>(@"SELECT * FROM Evolution_LobCrosswalk");
-                //var result = await connection.QueryAsync<Migration>(@"SELECT * FROM Migrations");
 
                 string sQuery = "SELECT * FROM Evolution_PeriodCrosswalk"
                                + " WHERE MigrationID = @Id";
-                //dbConnection.Open();
                 return await connection.QueryAsync<EvolutionPeriodCrosswalk>(sQuery, new { Id = id });
             }
-
 
         }
     }

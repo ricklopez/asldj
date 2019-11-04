@@ -1,32 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Configuration;
-using Dapper;
-using QQKraken.Model;
-using System.Data.SqlClient;
+﻿using Dapper;
 using Microsoft.AspNetCore.Authorization;
-// For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using QQKraken.Model;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
 
-namespace QQKrakenAPI.Controllers
+namespace QQKraken.Api.Controllers
 {
     [ApiController]
     [Authorize]
     [Route("api/v1/lob-mappings")]
     public class LobMappingController : ControllerBase
     {
-        //private readonly ProductsService _productService;
         private readonly IConfiguration _configuration;
 
+        //TODO: Create a service and inject
         public LobMappingController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
-        // GET: api/values
+
         [HttpGet]
         public async Task<IEnumerable<EvolutionLobCrosswalk>> Get()
         {
@@ -34,9 +29,6 @@ namespace QQKrakenAPI.Controllers
             {
                 await connection.OpenAsync();
                 var result = await connection.QueryAsync<EvolutionLobCrosswalk>(@"SELECT * FROM Evolution_LobCrosswalk");
-                //var result = await connection.QueryAsync<Migration>(@"SELECT * FROM Migrations");
-
-
 
                 return result;
             }
