@@ -30,7 +30,7 @@ ELSE IF @PairName = 'Catalyst_LOBs'
 
 	BEGIN
 
-		SELECT InternalCode AS ValueMember, LOB AS DisplayMember
+		SELECT LOBID, InternalCode, LOB
 		FROM dbo.Catalyst_LOBs
 		ORDER BY LOB
 
@@ -40,7 +40,7 @@ ELSE IF @PairName = 'Catalyst_Periods'
 
 	BEGIN
 
-		SELECT PeriodValue AS ValueMember, PeriodName AS DisplayMember
+		SELECT PeriodValue, PeriodName
 		FROM dbo.Catalyst_Periods
 
 	END

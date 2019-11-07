@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29326.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "MpmmDb_Dev", "MpmmDb_Dev\MpmmDb_Dev.sqlproj", "{6BC82F7B-52DE-4116-8B30-C55E7C292EDE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6BC82F7B-52DE-4116-8B30-C55E7C292EDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BC82F7B-52DE-4116-8B30-C55E7C292EDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BC82F7B-52DE-4116-8B30-C55E7C292EDE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{6BC82F7B-52DE-4116-8B30-C55E7C292EDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BC82F7B-52DE-4116-8B30-C55E7C292EDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BC82F7B-52DE-4116-8B30-C55E7C292EDE}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DF3911EC-3CB6-45E8-806D-85806C85B7B1}
+	EndGlobalSection
+EndGlobal
