@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29326.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QQKraken.Api", "QQKraken.Api.csproj", "{195ED441-CEF5-49AF-9E3B-569355FE36DD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QQKraken.Model", "..\QQKraken.Model\QQKraken.Model.csproj", "{DA861EE8-F512-4A7D-93D9-DFE56C72861E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{69D61688-B473-4B24-9385-AA4DEAC85CE8}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{195ED441-CEF5-49AF-9E3B-569355FE36DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{195ED441-CEF5-49AF-9E3B-569355FE36DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{195ED441-CEF5-49AF-9E3B-569355FE36DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{195ED441-CEF5-49AF-9E3B-569355FE36DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA861EE8-F512-4A7D-93D9-DFE56C72861E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA861EE8-F512-4A7D-93D9-DFE56C72861E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA861EE8-F512-4A7D-93D9-DFE56C72861E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA861EE8-F512-4A7D-93D9-DFE56C72861E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2D85A2F9-AD01-4190-824A-DD035062FDE8}
+	EndGlobalSection
+EndGlobal
