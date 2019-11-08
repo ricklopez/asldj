@@ -23,12 +23,13 @@ namespace QQKraken.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<CatalysePeriod> Get()
+        public IEnumerable<CatalystPeriod> Get()
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();
-                var result = connection.Query<CatalysePeriod>("App_Sel_ValueNamePairs", new { PairName = "Catalyst_Periods", IntVar1 = 0, StrVar1 = " " }, commandType: CommandType.StoredProcedure);
+                //var result = connection.Query<CatalysePeriod>("App_Sel_ValueNamePairs", new { PairName = "Catalyst_Periods", IntVar1 = 0, StrVar1 = " " }, commandType: CommandType.StoredProcedure);
+                var result = connection.Query<CatalystPeriod>(@"SELECT * FROM Catalyst_Periods");
 
                 return result;
             }
