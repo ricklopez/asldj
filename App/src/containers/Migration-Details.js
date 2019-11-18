@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import { fetchMigration, fetchLOBMappings, fetchPeriodMappings } from '../actions/migration-actions';
-import { completeTask, updateLobMapping, updatePeriodMapping, createStandUpDB } from '../actions/task-actions';
+import { completeTask, updateLOBMapping, updatePeriodMapping, createStandUpDB } from '../actions/task-actions';
 import AppHeader from '../components/header';
 import loadingImg from '../assets/loading-one.gif';
 import Task from '../components/details-task.js';
@@ -14,29 +14,21 @@ import _ from 'lodash';
 import moment from 'moment';
 import LobCellRenderer from '../components/renderers/lobCellRenderer';
 import PeriodCellRenderer from '../components/renderers/periodCellRenderer';
-
-
-
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import "react-tabs/style/react-tabs.css";
+ 
 
 const columnsLOB = [
-    { field: 'evolutionLOB', headerName: 'Client LOB', sortable: true, filter: true},
-    {
-        field: 'catalystLOB',
-        headerName: 'Catalyst LOB',
-        cellRendererFramework: LobCellRenderer},
-    { field: 'evolutionCoverage', headerName: 'Client Coverage', sortable: true, filter: true, editable:true},
-    { field: 'displayName', headerName: 'Display Name', sortable: true, filter: true},
-    { field: 'countOfClientRows', headerName: 'Count Client Rows', sortable: true, filter: true},
+    { field: 'sourceLOB', headerName: 'Client LOB', sortable: true, filter: true },
+    { field: 'targetLOB', headerName: 'Catalyst LOB', cellRendererFramework: LobCellRenderer },
+    { field: 'sourceCoverage', headerName: 'Client Coverage', sortable: true, filter: true, editable:true },
+    { field: 'displayName', headerName: 'Display Name', sortable: true, filter: true },
+    { field: 'recordCount', headerName: 'Count Client Rows', sortable: true, filter: true },
 ];
 
 const columnsPeriods = [
-    { field: 'evolutionPeriod', headerName: 'Client Period', sortable: true, filter: true, width: 550,},
-    {
-        field: 'catalystPeriod',
-        headerName: 'Catalyst Period',
-        width: 550,
-        cellRendererFramework: PeriodCellRenderer,
-        },
+    { field: 'sourcePeriod', headerName: 'Client Period', sortable: true, filter: true, width: 550 },
+    { field: 'targetPeriod', headerName: 'Catalyst Period', width: 550, cellRendererFramework: PeriodCellRenderer }
 ];
 
 
@@ -188,10 +180,16 @@ class MigrationDetails extends Component {
                         </div>
                         <hr/>
                     </div>
-                    <div className="row mt-3">
-                        <div className="col">
-                            <h4 className="text-muted">Lines Of Business</h4>
-                        </div>
+                    <Tabs>
+                        <TabList>
+                            <Tab>
+                                Lines of Business
+                            </Tab>
+                            <Tab>
+                                Period
+                            </Tab>
+                        </TabList>
+                        <TabPanel>
                         <div className="container">
                             <div className="row">
                                 <div className="col">
@@ -215,11 +213,8 @@ class MigrationDetails extends Component {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="row mt-5">
-                        <div className="col">
-                            <h4 className="text-muted">Periods</h4>
-                        </div>
+                        </TabPanel>
+                        <TabPanel>
                         <div className="container">
                             <div className="row">
                                 <div className="col">
@@ -243,7 +238,9 @@ class MigrationDetails extends Component {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        </TabPanel>
+                    </Tabs>
+                   
                         </div>)
                         : (<div></div>)}
                 </div>
@@ -252,16 +249,12 @@ class MigrationDetails extends Component {
     }
 
     onLobCellValueChanged = (event) => {
-        this.props.updateLobMapping({...event.data, token: this.props.token});
+        this.props.updateLOBMapping({...event.data, token: this.props.token});
     };
 
     onPeriodCellValueChanged = (event) => {
         this.props.updatePeriodMapping({...event.data, token: this.props.token});
     };
-
-
-
-
 }
 
 
@@ -281,7 +274,7 @@ function mapDispatchToProps(dispatch){
             fetchMigration,
             fetchLOBMappings,
             fetchPeriodMappings,
-            updateLobMapping,
+            updateLOBMapping,
             updatePeriodMapping,
             completeTask,
             createStandUpDB

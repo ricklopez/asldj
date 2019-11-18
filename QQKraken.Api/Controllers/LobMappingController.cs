@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using QQKraken.Api.Models;
+using QQKraken.Api.Models.Mappings;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace QQKraken.Api.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/v1/lob-mappings")]
     public class LobMappingController : ControllerBase
     {
@@ -22,12 +23,21 @@ namespace QQKraken.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<EvolutionLobCrosswalk>> Get()
+        public async Task<IEnumerable<LineOfBusiness>> Get()
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 await connection.OpenAsync();
-                var result = await connection.QueryAsync<EvolutionLobCrosswalk>(@"SELECT * FROM Evolution_LobCrosswalk");
+                var result = await connection.QueryAsync<LineOfBusiness>(@"
+                    SELECT 
+	                    MigrationId,
+	                    EvolutionLOB AS SourceLOB,
+	                    EvolutionCoverage AS SourceCoverage,
+                        CatalystLOB AS TargetLOB,
+	                    DisplayName,
+	                    CountOfEvolutionRows AS RecordCount
+                      FROM 
+	                    Evolution_LobCrosswalk");
 
                 return result;
             }
@@ -37,7 +47,7 @@ namespace QQKraken.Api.Controllers
 
         // GET: api/values
         [HttpPut]
-        public async Task<ActionResult<EvolutionLobCrosswalk>> Update([FromBody] EvolutionLobCrosswalk l)
+        public async Task<ActionResult<LineOfBusiness>> Update([FromBody] LineOfBusiness l)
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
@@ -47,22 +57,18 @@ namespace QQKraken.Api.Controllers
                                + " CountOfEvolutionRows = @CountOfEvolutionRows "
                                + " WHERE MigrationId = @MigrationId AND EvolutionLOB = @EvolutionLOB AND EvolutionCoverage = @EvolutionCoverage;";
 
-                //string sQuery = " UPDATE Migrations SET MigrationName = 'Del Toro Insu' WHERE MigrationID = 956";
 
                 await connection.OpenAsync();
                 var result = await connection.ExecuteAsync(sQuery, new
                 {
                     Id = l.MigrationId,
                     MigrationId = l.MigrationId,
-                    EvolutionLOB = l.EvolutionLOB,
-                    EvolutionCoverage = l.EvolutionCoverage,
-                    CatalystLOB = l.CatalystLOB,
+                    EvolutionLOB = l.SourceLOB,
+                    EvolutionCoverage = l.SourceCoverage,
+                    CatalystLOB = l.TargetLOB,
                     DisplayName = l.DisplayName,
-                    CountOfEvolutionRows = l.CountOfEvolutionRows
+                    CountOfEvolutionRows = l.RecordCount
                 });
-                //var result = await connection.QueryAsync<Migration>(@"SELECT * FROM Migrations");
-
-
 
                 return Ok();
             }

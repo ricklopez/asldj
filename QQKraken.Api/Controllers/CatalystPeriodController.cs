@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 namespace QQKraken.Api.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/v1/catalyst-periods")]
     public class CatalystPeriodController : ControllerBase
     {
@@ -26,7 +27,6 @@ namespace QQKraken.Api.Controllers
             using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();
-                //var result = connection.Query<CatalysePeriod>("App_Sel_ValueNamePairs", new { PairName = "Catalyst_Periods", IntVar1 = 0, StrVar1 = " " }, commandType: CommandType.StoredProcedure);
                 var result = connection.Query<CatalystPeriod>(@"SELECT * FROM Catalyst_Periods");
 
                 return result;

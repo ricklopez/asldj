@@ -1,7 +1,9 @@
 ﻿using Dapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using QQKraken.Api.Models;
+using QQKraken.Api.Models.Mappings;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -10,6 +12,7 @@ using System.Threading.Tasks;
 namespace QQKraken.Api.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/v1/[controller]")]
     public class MigrationsController : ControllerBase
     {
@@ -161,31 +164,48 @@ namespace QQKraken.Api.Controllers
         }
 
         [HttpGet("{id}/lob-mappings")]
-        public async Task<IEnumerable<EvolutionLobCrosswalk>> GetAllLobMappings(int id)
+        public async Task<IEnumerable<LineOfBusiness>> GetAllLobMappings(int id)
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 await connection.OpenAsync();
 
-                string sQuery = "SELECT * FROM Evolution_LobCrosswalk"
-                               + " WHERE MigrationID = @Id";
+                string sQuery = @"
+                    SELECT 
+	                    MigrationId,
+	                    EvolutionLOB AS SourceLOB,
+	                    EvolutionCoverage AS SourceCoverage,
+                        CatalystLOB AS TargetLOB,
+	                    DisplayName,
+	                    CountOfEvolutionRows AS RecordCount
+                      FROM 
+	                    Evolution_LobCrosswalk
+                      WHERE 
+                        MigrationID = @Id";
 
-                return await connection.QueryAsync<EvolutionLobCrosswalk>(sQuery, new { Id = id });
+                return await connection.QueryAsync<LineOfBusiness>(sQuery, new { Id = id });
             }
 
 
         }
 
         [HttpGet("{id}/period-mappings")]
-        public async Task<IEnumerable<EvolutionPeriodCrosswalk>> GetAllPeriodMappings(int id)
+        public async Task<IEnumerable<Period>> GetAllPeriodMappings(int id)
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
                 await connection.OpenAsync();
 
-                string sQuery = "SELECT * FROM Evolution_PeriodCrosswalk"
-                               + " WHERE MigrationID = @Id";
-                return await connection.QueryAsync<EvolutionPeriodCrosswalk>(sQuery, new { Id = id });
+                string sQuery = @"
+                    SELECT 
+                        MigrationId,
+                        EvolutionPeriod AS SourcePeriod, 
+                        CatalystPeriod AS TargetPeriod 
+                      FROM 
+                        Evolution_PeriodCrosswalk
+                      WHERE 
+                        MigrationID = @Id";
+                return await connection.QueryAsync<Period>(sQuery, new { Id = id });
             }
 
         }

@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 namespace QQKraken.Api.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/v1/catalyst-lobs")]
     public class CatalystLOBController : ControllerBase
     {
