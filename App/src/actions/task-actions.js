@@ -20,8 +20,7 @@ export function completeTask(data) {
     };
 }
 
-
-export function updateLobMapping(data) {
+export function updateLOBMapping(data) {
     sessionKey = data.token || sessionKey;
     const reqPromise = axios.put(`${env.AUTH_ROOT_URL}/lob-mappings`, data, {
         headers: {
@@ -34,8 +33,9 @@ export function updateLobMapping(data) {
         type: types.UPDATE_LOB_MAPPING,
         payload: reqPromise
     };
+}
 
-}export function updatePeriodMapping(data) {
+export function updatePeriodMapping(data) {
     sessionKey = data.token || sessionKey;
     const reqPromise = axios.put(`${env.AUTH_ROOT_URL}/period-mappings`, data, {
         headers: {
@@ -63,5 +63,4 @@ export function createStandUpDB(migration, data) {
         type: types.STANDUP_DB,
         payload: reqPromise
     };
-
 }
