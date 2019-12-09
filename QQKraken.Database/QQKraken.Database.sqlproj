@@ -142,6 +142,11 @@
     <Build Include="dbo\Synonyms\qqcPolicyDetails.sql" />
     <Build Include="dbo\Functions\QQEncrypt.sql" />
     <Build Include="dbo\Functions\QQDecrypt.sql" />
+    <Build Include="dbo\Tables\Evolution_OfficeCrosswalk.sql" />
+    <Build Include="dbo\Stored Procedures\Mpmm_StandUp_Tick.sql" />
+    <Build Include="dbo\Stored Procedures\Mpmm_Convert_Tick.sql" />
+    <Build Include="dbo\Stored Procedures\App_Sel_EvolutionOfficeQueue.sql" />
+    <Build Include="dbo\Stored Procedures\App_Dts_Convert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_Sync\local.scmp" />
