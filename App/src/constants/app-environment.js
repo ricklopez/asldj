@@ -1,4 +1,4 @@
-let apiUrl = 'https://localhost:44307/api/v1';
+let apiUrl = 'http://localhost:60526/api/v1';
 //let env = process.env.REACT_NODE_ENV ? process.env.REACT_NODE_ENV : process.env.NODE_ENV;
 let env = window.location.hostname;
 
@@ -14,10 +14,10 @@ switch (env) {
         apiUrl = 'https://qqmigrationapi-dev.qqsolutions.com';
         break;
     case 'localhost':
-        apiUrl = 'https://localhost:44307';
+        apiUrl = 'http://localhost:60526';
         break;
     default:
-        apiUrl = 'https://localhost:44307';
+        apiUrl = 'http://localhost:60526';
         break;
 }
 export const AUTH_ROOT_URL = `${apiUrl}/api/v1` || 'https://localhost:44307/api/v1';

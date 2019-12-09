@@ -50,12 +50,13 @@ export function fetchPeriodMappings(data) {
 }
 
 export function createMigration(data) {
+    sessionKey = data.token || sessionKey;
+    const headers = {
+        Authorization: `Bearer ${sessionKey}`,
+        'Content-Type': 'application/json'
+    };
 
-
-    const reqPromise = axios.post(env.MIGRATIONS_URL,data, {
-        headers: {
-            'Content-Type': 'application/json'
-        }});
+    const reqPromise = axios.post(env.MIGRATIONS_URL,data, {headers});
 
     return {
         type: types.CREATE_MIGRATION,
