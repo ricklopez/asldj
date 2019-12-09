@@ -1,4 +1,4 @@
-﻿CREATE   PROCEDURE [dbo].[App_Dts_Standup]
+﻿CREATE PROCEDURE [dbo].[App_Dts_Convert]
 (@MigrationID INT)
 AS
 
@@ -7,7 +7,7 @@ SET NOCOUNT ON
 DECLARE @M NVARCHAR(50) = CAST(@MigrationID AS NVARCHAR)
 
 DECLARE @execution_id bigint  
-EXEC [SSISDB].[catalog].[create_execution] @package_name=N'01-Stand.dtsx', @execution_id=@execution_id OUTPUT, @folder_name=N'QQMigrations', @project_name=N'QQMigrationsETL', @use32bitruntime=False, @reference_id=1  
+EXEC [SSISDB].[catalog].[create_execution] @package_name=N'02-Convert.dtsx', @execution_id=@execution_id OUTPUT, @folder_name=N'QQMigrations', @project_name=N'QQMigrationsETL', @use32bitruntime=False, @reference_id=1  
 
 Select @execution_id  
 DECLARE @var0 smallint = 3  --Logging Level 3
