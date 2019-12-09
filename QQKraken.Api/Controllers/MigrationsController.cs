@@ -209,5 +209,28 @@ namespace QQKraken.Api.Controllers
             }
 
         }
+
+        [HttpGet("{id}/office-mappings")]
+        public async Task<IEnumerable<Office>> GetAllOfficeMappings(int id)
+        {
+            using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                await connection.OpenAsync();
+
+                var sQuery = @"
+                    SELECT 
+                        MigrationId,
+                        Catalyst_OfficeId AS Id,
+                        Evolution_OfficeId AS OfficeId,
+                        Evolution_OfficeName AS OfficeName
+                      FROM 
+                        Evolution_OfficeCrosswalk
+                      WHERE 
+                        MigrationID = @Id";
+
+                return await connection.QueryAsync<Office>(sQuery, new { Id = id });
+            }
+
+        }
     }
 }

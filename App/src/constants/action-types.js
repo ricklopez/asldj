@@ -11,3 +11,6 @@ export const UPDATE_LOB_MAPPING = 'Update_LOB_Mapping';
 
 export const FETCH_PERIODS_MAPPINGS = 'Fetch_Periods_Mappings';
 export const UPDATE_PERIOD_MAPPING = 'Update_Period_Mapping';
+
+export const FETCH_OFFICE_MAPPINGS = 'Fetch_Office_Mappings';
+export const UPDATE_OFFICE_MAPPING = 'Update_Office_Mapping';

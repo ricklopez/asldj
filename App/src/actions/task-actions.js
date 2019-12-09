@@ -50,6 +50,21 @@ export function updatePeriodMapping(data) {
     };
 }
 
+export function updateOfficeMapping(data) {
+    sessionKey = data.token || sessionKey;
+    const reqPromise = axios.put(`${env.AUTH_ROOT_URL}/office-mappings`, data, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionKey}`
+
+        }});
+
+    return {
+        type: types.UPDATE_OFFICE_MAPPING,
+        payload: reqPromise
+    };
+}
+
 export function createStandUpDB(migration, data) {
     sessionKey = data.token || sessionKey;
     migration.isPhase1 = true;

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
-import { fetchMigration, fetchLOBMappings, fetchPeriodMappings } from '../actions/migration-actions';
-import { completeTask, updateLOBMapping, updatePeriodMapping, createStandUpDB } from '../actions/task-actions';
+import { fetchMigration, fetchLOBMappings, fetchPeriodMappings, fetchOfficeMappings } from '../actions/migration-actions';
+import { completeTask, updateLOBMapping, updatePeriodMapping, updateOfficeMapping, createStandUpDB } from '../actions/task-actions';
 import AppHeader from '../components/header';
 import loadingImg from '../assets/loading-one.gif';
 import Task from '../components/details-task.js';
@@ -31,6 +31,12 @@ const columnsPeriods = [
     { field: 'targetPeriod', headerName: 'Catalyst Period', width: 550, cellRendererFramework: PeriodCellRenderer }
 ];
 
+const columnsOffices = [
+    { field: 'officeName', headerName: 'Client Office Name', sortable: true, filter: true, width: 400 },
+    { field: 'officeId', headerName: 'Client Office Id', sortable: true, filter: true, width: 400 },
+    { field: 'id', headerName: 'Catalyst Office Id', sortable: true, filter: true, editable: true, width: 400 }
+];
+
 
 class MigrationDetails extends Component {
     constructor(props) {
@@ -44,6 +50,7 @@ class MigrationDetails extends Component {
         this.props.fetchMigration({id, token: this.props.auth.token});
         this.props.fetchLOBMappings({id, token: this.props.auth.token});
         this.props.fetchPeriodMappings({id, token: this.props.auth.token});
+        this.props.fetchOfficeMappings({id, token: this.props.auth.token});
 
 
     }
@@ -188,6 +195,9 @@ class MigrationDetails extends Component {
                             <Tab>
                                 Period
                             </Tab>
+                            <Tab>
+                                Offices
+                            </Tab>
                         </TabList>
                         <TabPanel>
                         <div className="container">
@@ -239,6 +249,31 @@ class MigrationDetails extends Component {
                             </div>
                         </div>
                         </TabPanel>
+                        <TabPanel>
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col">
+                                        <div
+                                            className="ag-theme-balham"
+                                            style={{
+                                                height: '800px',
+                                                width: '100%' }}
+                                        >
+                                            <AgGridReact
+                                                columnDefs={columnsOffices}
+                                                rowData={this.props.offices}
+                                                pagination= {true}
+                                                deltaRowDataMode={true}
+                                                // return id required for tree data and delta updates
+                                                getRowNodeId={data => data.id}
+                                                onCellValueChanged={this.onOfficeCellValueChanged}
+                                            >
+                                            </AgGridReact>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </TabPanel>
                     </Tabs>
                    
                         </div>)
@@ -255,15 +290,20 @@ class MigrationDetails extends Component {
     onPeriodCellValueChanged = (event) => {
         this.props.updatePeriodMapping({...event.data, token: this.props.token});
     };
+
+    onOfficeCellValueChanged = (event) => {
+        this.props.updateOfficeMapping({...event.data, token: this.props.token});
+    };
 }
 
 
 
-function mapStateToProps({ migration, lobMappings, periodsMappings, auth }, ownProps) {
+function mapStateToProps({ migration, lobMappings, periodsMappings, officeMappings, auth }, ownProps) {
     return {
         migration: migration,
         lobs: lobMappings,
         periods: periodsMappings,
+        offices: officeMappings,
         auth: auth
     };
 }
@@ -274,8 +314,10 @@ function mapDispatchToProps(dispatch){
             fetchMigration,
             fetchLOBMappings,
             fetchPeriodMappings,
+            fetchOfficeMappings,
             updateLOBMapping,
             updatePeriodMapping,
+            updateOfficeMapping,
             completeTask,
             createStandUpDB
         }, dispatch);

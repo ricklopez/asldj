@@ -5,6 +5,7 @@ import Migrations from './migrations-reducer';
 import Migration from './migration-reducer';
 import LOBMappings from './lob-mappings-reducer';
 import PeriodsMappings from './periods-mappings-reducer';
+import OfficeMappings from './offices-mappings-reducer';
 
 const rootReducer = combineReducers({
     auth: SignIn,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     migrations: Migrations,
     migration: Migration,
     lobMappings: LOBMappings,
-    periodsMappings: PeriodsMappings
+    periodsMappings: PeriodsMappings,
+    officeMappings:  OfficeMappings
 });
 
 export default rootReducer;

@@ -49,6 +49,20 @@ export function fetchPeriodMappings(data) {
     };
 }
 
+export function fetchOfficeMappings(data) {
+    sessionKey = data.token || sessionKey;
+    const headers = {
+        Authorization: `Bearer ${sessionKey}`
+    };
+    const reqPromise = axios.get(`${env.MIGRATIONS_URL}/${data.id}/office-mappings`, {headers});
+
+
+    return {
+        type: types.FETCH_OFFICE_MAPPINGS,
+        payload: reqPromise
+    };
+}
+
 export function createMigration(data) {
     sessionKey = data.token || sessionKey;
     const headers = {
