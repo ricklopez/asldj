@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using CsvHelper;
+using Dapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -7,6 +8,7 @@ using QQKraken.Api.Models.Mappings;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace QQKraken.Api.Controllers
@@ -229,6 +231,79 @@ namespace QQKraken.Api.Controllers
                         MigrationID = @Id";
 
                 return await connection.QueryAsync<Office>(sQuery, new { Id = id });
+            }
+
+        }
+
+        [HttpGet("{id}/action-items")]
+        public async Task<IEnumerable<MigrationActionItem>> GetAllActionItems(int id)
+        {
+            using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                await connection.OpenAsync();
+
+                var sQuery = @"
+                    SELECT
+	                    ActionItemID AS Id,
+	                    MigrationId,
+	                    ErrorNumber,
+	                    ParentTable,
+	                    ProblemCategory AS [Category],
+	                    ProblemDesc AS [Description],
+	                    RecordsAffected,
+	                    DefaultAction,
+	                    ActionValue
+                      FROM
+	                    [dbo].[MigrationsActionItems]
+                      WHERE
+	                    MigrationId = @Id";
+
+                return await connection.QueryAsync<MigrationActionItem>(sQuery, new { Id = id });
+            }
+
+        }
+
+        [HttpGet("{id}/action-item-details")]
+        public IActionResult GetAllActionItemDetails(int id)
+        {
+            using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                connection.Open();
+
+                var query = @"
+                    SELECT 
+	                    ActionDetailId AS Id,
+	                    MigrationId,
+	                    ErrorNumber,
+	                    ParentTable,
+	                    ProblemCategory AS [Category],
+	                    ProblemDesc AS [Description],
+	                    ClientNumber,
+	                    FullClientName,
+	                    Phone,
+	                    PolicyNumber,
+	                    PolicyEffective,
+	                    PolicyExpiration,
+	                    Coverage
+                      FROM 
+	                    [dbo].[MigrationsActionDetails]
+                      WHERE
+	                    MigrationId = @Id";
+
+                var data = connection.Query<MigrationActionItemDetail>(query, new { Id = id });
+
+                var stream = new MemoryStream();
+                var writeFile = new StreamWriter(stream);
+                var csv = new CsvWriter(writeFile);
+
+                csv.WriteRecords(data);
+
+                stream.Position = 0;
+
+                var identifier = Guid.NewGuid();
+                var filename = $"Action-Items-{id}-{identifier}.csv";
+
+                return File(stream, "application/octet-stream", filename);
             }
 
         }
