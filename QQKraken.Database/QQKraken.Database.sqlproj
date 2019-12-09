@@ -65,8 +65,6 @@
     <Folder Include="Assemblies\" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Tables\SqlServersDatabases.sql" />
-    <Build Include="dbo\Tables\SqlServers.sql" />
     <Build Include="dbo\Tables\MigrationTableStats.sql" />
     <Build Include="dbo\Tables\MigrationsTypes.sql" />
     <Build Include="dbo\Tables\MigrationsTableAlias.sql" />
@@ -147,6 +145,10 @@
     <Build Include="dbo\Stored Procedures\Mpmm_Convert_Tick.sql" />
     <Build Include="dbo\Stored Procedures\App_Sel_EvolutionOfficeQueue.sql" />
     <Build Include="dbo\Stored Procedures\App_Dts_Convert.sql" />
+    <Build Include="dbo\Tables\MigrationsActionItems.sql" />
+    <Build Include="dbo\Tables\MigrationsActionDetails.sql" />
+    <Build Include="dbo\Stored Procedures\App_Sel_MigrationsActionItems_MigrationID.sql" />
+    <Build Include="dbo\Stored Procedures\App_Sel_MigrationsActionDetails_MigrationID.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_Sync\local.scmp" />
