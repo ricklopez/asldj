@@ -300,7 +300,7 @@ class MigrationDetails extends Component {
                             </div>
                             <div className="col">
                                 <div className="float-right">
-                                    <a href="#" target="_blank" onClick={this.onExportDetailsClick}>Export</a>
+                                    <a href="#" onClick={this.onExportDetailsClick}>Export</a>
                                 </div>
                             </div>
                             <hr/>

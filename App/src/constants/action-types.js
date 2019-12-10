@@ -17,3 +17,4 @@ export const UPDATE_OFFICE_MAPPING = 'Update_Office_Mapping';
 
 export const FETCH_ACTION_ITEMS = 'Fetch_Action_Items';
 export const UPDATE_ACTION_ITEM = 'Update_Action_Item';
+export const DOWNLOAD_ACTION_ITEM_DETAILS = 'Download_Action_Item_Details';

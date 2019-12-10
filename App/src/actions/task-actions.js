@@ -100,7 +100,7 @@ export function downloadActionItemDetailsData(migration, data) {
     sessionKey = data.token || sessionKey;
     var url = `${env.AUTH_ROOT_URL}/migrations/${migration.migrationId}/action-item-details`;
 
-    axios.get(url, {
+    const reqPromise = axios.get(url, {
         responseType: 'blob',
         headers: {
             'Content-Type': 'application/json',
@@ -111,4 +111,9 @@ export function downloadActionItemDetailsData(migration, data) {
            download(response.data, "report.csv", content)
         })
         .catch(error => console.log(error));
+
+    return {
+        type: types.DOWNLOAD_ACTION_ITEM_DETAILS,
+        payload: reqPromise
+    }
 }
