@@ -2,8 +2,6 @@ import {
     FETCH_OFFICE_MAPPINGS,
     UPDATE_OFFICE_MAPPING
 } from '../constants/action-types';
-// import objectAssign from 'object-assign';
-//import _ from 'lodash';
 
 export default function(state = [], action) {
 

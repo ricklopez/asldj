@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import { fetchMigration, fetchLOBMappings, fetchPeriodMappings, fetchOfficeMappings, fetchActionItems } from '../actions/migration-actions';
-import { completeTask, updateLOBMapping, updatePeriodMapping, updateOfficeMapping, updateActionItem, createStandUpDB } from '../actions/task-actions';
+import { completeTask, updateLOBMapping, updatePeriodMapping, updateOfficeMapping, updateActionItem, createStandUpDB, downloadActionItemDetailsData } from '../actions/task-actions';
 import AppHeader from '../components/header';
 import loadingImg from '../assets/loading-one.gif';
 import Task from '../components/details-task.js';
@@ -51,6 +51,8 @@ class MigrationDetails extends Component {
         super(props);
         this.onTaskClick = this.onTaskClick.bind(this);
         this.onStandUp = this.onStandUp.bind(this);
+        this.onExportDetailsClick = this.onExportDetailsClick.bind(this);
+        
     }
 
     componentDidMount() {
@@ -74,7 +76,7 @@ class MigrationDetails extends Component {
     onStandUp(event) {
         this.props.createStandUpDB(this.props.migration, this.props.auth);
     }
-    
+
     onExportDetailsClick(event) {
         this.props.downloadActionItemDetailsData(this.props.migration, this.props.auth);
     }
@@ -298,6 +300,7 @@ class MigrationDetails extends Component {
                             </div>
                             <div className="col">
                                 <div className="float-right">
+                                    <a href="#" target="_blank" onClick={this.onExportDetailsClick}>Export</a>
                                 </div>
                             </div>
                             <hr/>
@@ -374,7 +377,8 @@ function mapDispatchToProps(dispatch){
             updateOfficeMapping,
             updateActionItem,
             completeTask,
-            createStandUpDB
+            createStandUpDB,
+            downloadActionItemDetailsData
         }, dispatch);
 }
 

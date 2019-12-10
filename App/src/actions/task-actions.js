@@ -1,6 +1,7 @@
 import * as types from '../constants/action-types';
 import * as env from '../constants/app-environment';
 import axios from 'axios';
+import download from 'downloadjs'
 let sessionKey = sessionStorage.getItem('adal.idtoken');
 
 
@@ -93,4 +94,21 @@ export function createStandUpDB(migration, data) {
         type: types.STANDUP_DB,
         payload: reqPromise
     };
+}
+
+export function downloadActionItemDetailsData(migration, data) {
+    sessionKey = data.token || sessionKey;
+    var url = `${env.AUTH_ROOT_URL}/migrations/${migration.migrationId}/action-item-details`;
+
+    axios.get(url, {
+        responseType: 'blob',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionKey}`
+        }})
+        .then(response => {
+           const content = response.headers['content-type'];
+           download(response.data, "report.csv", content)
+        })
+        .catch(error => console.log(error));
 }
