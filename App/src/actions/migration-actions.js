@@ -63,6 +63,20 @@ export function fetchOfficeMappings(data) {
     };
 }
 
+export function fetchActionItems(data) {
+    sessionKey = data.token || sessionKey;
+    const headers = {
+        Authorization: `Bearer ${sessionKey}`
+    };
+    const reqPromise = axios.get(`${env.MIGRATIONS_URL}/${data.id}/action-items`, {headers});
+
+
+    return {
+        type: types.FETCH_ACTION_ITEMS,
+        payload: reqPromise
+    };
+}
+
 export function createMigration(data) {
     sessionKey = data.token || sessionKey;
     const headers = {

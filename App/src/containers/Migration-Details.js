@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
-import { fetchMigration, fetchLOBMappings, fetchPeriodMappings, fetchOfficeMappings } from '../actions/migration-actions';
-import { completeTask, updateLOBMapping, updatePeriodMapping, updateOfficeMapping, createStandUpDB } from '../actions/task-actions';
+import { fetchMigration, fetchLOBMappings, fetchPeriodMappings, fetchOfficeMappings, fetchActionItems } from '../actions/migration-actions';
+import { completeTask, updateLOBMapping, updatePeriodMapping, updateOfficeMapping, updateActionItem, createStandUpDB } from '../actions/task-actions';
 import AppHeader from '../components/header';
 import loadingImg from '../assets/loading-one.gif';
 import Task from '../components/details-task.js';
@@ -37,6 +37,14 @@ const columnsOffices = [
     { field: 'id', headerName: 'Catalyst Office Id', sortable: true, filter: true, editable: true, width: 400 }
 ];
 
+const columnActionItems = [
+    { field: 'parentTable', headerName: 'Parent Table', sortable: true, filter: true, width: 150 },
+    { field: 'category', headerName: 'Category', sortable: true, filter: true, width: 150 },
+    { field: 'description', headerName: 'Description', sortable: true, filter: true, width: 200 },
+    { field: 'recordsAffected', headerName: 'Records Affected', sortable: true, width: 200 },
+    { field: 'defaultAction', headerName: 'Default', sortable: true, width: 200 },
+    { field: 'actionValue', headerName: 'Solution', editable: true, width: 200 }
+];
 
 class MigrationDetails extends Component {
     constructor(props) {
@@ -51,8 +59,7 @@ class MigrationDetails extends Component {
         this.props.fetchLOBMappings({id, token: this.props.auth.token});
         this.props.fetchPeriodMappings({id, token: this.props.auth.token});
         this.props.fetchOfficeMappings({id, token: this.props.auth.token});
-
-
+        this.props.fetchActionItems({id, token: this.props.auth.token});
     }
 
     onTaskClick(event) {
@@ -67,7 +74,10 @@ class MigrationDetails extends Component {
     onStandUp(event) {
         this.props.createStandUpDB(this.props.migration, this.props.auth);
     }
-
+    
+    onExportDetailsClick(event) {
+        this.props.downloadActionItemDetailsData(this.props.migration, this.props.auth);
+    }
 
     renderTasks() {
 
@@ -122,7 +132,7 @@ class MigrationDetails extends Component {
                                     <h6 className="card-subtitle mb-2 text-muted">Migration Type:  {migration.migrationTypeID ? migration.migrationTypeID : ''}</h6>
                                     <p className="card-text"> <strong>Source Host: </strong> {migration.sourceHostName}</p>
                                     <p className="card-text"> <strong>Source DB: </strong> {migration.sourceDb}</p>
-                                        <p className="card-text"> <strong>Source Schema: </strong> {migration.sourceSchema}</p>
+                                    <p className="card-text"> <strong>Source Schema: </strong> {migration.sourceSchema}</p>
                                     <p className="card-text"> <strong>Source XML Count: </strong> {migration.sourceXmlCount}</p>
                                     <p className="card-text"> <strong>Dest Host: </strong> {migration.destDbHostName}</p>
                                     <p className="card-text"> <strong>Dest DB: </strong> {migration.destDb}</p>
@@ -264,7 +274,6 @@ class MigrationDetails extends Component {
                                                 rowData={this.props.offices}
                                                 pagination= {true}
                                                 deltaRowDataMode={true}
-                                                // return id required for tree data and delta updates
                                                 getRowNodeId={data => data.id}
                                                 onCellValueChanged={this.onOfficeCellValueChanged}
                                             >
@@ -276,8 +285,49 @@ class MigrationDetails extends Component {
                         </TabPanel>
                     </Tabs>
                    
-                        </div>)
+                        </div>
+                        
+                        
+                        )
                         : (<div></div>)}
+
+                    {this.props.migration.phase !== 0 ? (<div>
+                        <div className="row mt-5">
+                            <div className="col">
+                                <h2> Action Items</h2>
+                            </div>
+                            <div className="col">
+                                <div className="float-right">
+                                </div>
+                            </div>
+                            <hr/>
+                        </div>
+
+                        <div className="container">
+                                <div className="row">
+                                    <div className="col">
+                                        <div
+                                            className="ag-theme-balham"
+                                            style={{
+                                                height: '800px',
+                                                width: '100%' }}
+                                        >
+                                            <AgGridReact
+                                                columnDefs={columnActionItems}
+                                                rowData={this.props.actionItems}
+                                                pagination= {true}
+                                                deltaRowDataMode={true}
+                                                // return id required for tree data and delta updates
+                                                getRowNodeId={data => data.id}
+                                                onCellValueChanged={this.onActionItemCellValueChanged}
+                                            >
+                                            </AgGridReact>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                    </div>) : (<div></div>)}
                 </div>
             </div>
         );
@@ -294,16 +344,19 @@ class MigrationDetails extends Component {
     onOfficeCellValueChanged = (event) => {
         this.props.updateOfficeMapping({...event.data, token: this.props.token});
     };
+
+    onActionItemCellValueChanged = (event) => {
+        this.props.updateActionItem({...event.data, token: this.props.token});
+    };
 }
 
-
-
-function mapStateToProps({ migration, lobMappings, periodsMappings, officeMappings, auth }, ownProps) {
+function mapStateToProps({ migration, lobMappings, periodsMappings, officeMappings, actionItems, auth }, ownProps) {
     return {
         migration: migration,
         lobs: lobMappings,
         periods: periodsMappings,
         offices: officeMappings,
+        actionItems: actionItems,
         auth: auth
     };
 }
@@ -315,9 +368,11 @@ function mapDispatchToProps(dispatch){
             fetchLOBMappings,
             fetchPeriodMappings,
             fetchOfficeMappings,
+            fetchActionItems,
             updateLOBMapping,
             updatePeriodMapping,
             updateOfficeMapping,
+            updateActionItem,
             completeTask,
             createStandUpDB
         }, dispatch);

@@ -1,22 +1,18 @@
 import {
-    FETCH_OFFICE_MAPPINGS,
-    UPDATE_OFFICE_MAPPING
+    FETCH_ACTION_ITEMS,
+    UPDATE_ACTION_ITEM
 } from '../constants/action-types';
-// import objectAssign from 'object-assign';
-//import _ from 'lodash';
 
 export default function(state = [], action) {
 
     switch (action.type) {
-
-
-        case FETCH_OFFICE_MAPPINGS:
+        case FETCH_ACTION_ITEMS:
             if (action.payload.status === 200 && action.payload.data) {
                 return action.payload.data.map((item, index) => {return { id: index, ...item};});
             } else {
                 return state;
             }
-        case UPDATE_OFFICE_MAPPING:
+        case UPDATE_ACTION_ITEM:
             return state;
 
         default:
