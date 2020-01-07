@@ -1,0 +1,108 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="2/6/2019 12:50:44 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DEN0536L"
+  DTS:CreatorName="VERTAFORE\logangr"
+  DTS:DTSID="{E92512F6-A013-4C7B-A6DD-504B0B91B6DF}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.1301.433"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="BackupDatabase"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="1134"
+  DTS:VersionGUID="{042CBA56-8664-436F-AA3A-EB75DB2DB5A7}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[conversions.quickfileserver.com.master]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{FAC76B7D-B5B5-487F-B532-CA9A32AB6F89}"
+      DTS:ObjectName="conversions.quickfileserver.com.master">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=conversions.quickfileserver.com;Initial Catalog=master;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{38159D6A-BA22-4889-8218-8C289FE806AC}"
+      DTS:ObjectName="DestinationCatalog"
+      DTS:Required="True">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">QQCatalyst_QQ020154</DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Target DB Backup"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{FC58FFCD-B45D-4A91-9811-0E71D5066B04}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Target DB Backup">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Target DB Backup\Dynamic Backup"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Dynamic Backup"
+          DTS:DTSID="{057D2FF7-7012-4100-BDA2-DEE2A97F2085}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Dynamic Backup"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{FAC76B7D-B5B5-487F-B532-CA9A32AB6F89}"
+              SQLTask:SqlStatementSource="DECLARE @TSQL NVARCHAR(MAX)&#xA;DECLARE @TargetDbName NVARCHAR(50) = ?&#xA;&#xA;&#xA;SELECT @TSQL = 'BACKUP DATABASE [' + @TargetDbName + '] &#xA;TO  DISK = N''Z:\Microsoft SQL Server\MSSQL12.MSSQLSERVER\MSSQL\Backup\' + @TargetDbName + '_PREQQM.bak'' &#xA;WITH NOFORMAT, NOINIT,  NAME = N''' + @TargetDbName + '_PREQQM'', SKIP, REWIND, NOUNLOAD,  STATS = 10'&#xA;&#xA;EXECUTE(@TSQL)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="$Package::DestinationCatalog"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="129"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="163,42"
+          Id="Package\Target DB Backup\Dynamic Backup"
+          TopLeft="95,37" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="358,144"
+          Size="358,187"
+          Id="Package\Target DB Backup"
+          TopLeft="130.000013510386,66.5733331074184" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
