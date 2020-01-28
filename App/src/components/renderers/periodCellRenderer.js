@@ -53,6 +53,7 @@ export default class PeriodCellRenderer extends Component {
                 {shouldSpin ? (
                     <FontAwesomeIcon icon="spinner" spin/>) : (
                     <select value={this.props.value} onChange={this.onChange}>
+                        <option key="null" value="null">Please Select</option>
                         {optionsList}
                     </select>
                 )}

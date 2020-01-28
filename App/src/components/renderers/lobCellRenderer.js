@@ -18,6 +18,20 @@ export default class LobCellRenderer extends Component {
             Authorization: `Bearer ${sessionKey}`
         };
 
+        function compare(a, b) {
+            // Use toUpperCase() to ignore character casing
+            const itemA = a.lob.toUpperCase();
+            const itemB = b.lob.toUpperCase();
+
+            let comparison = 0;
+            if (itemA > itemB) {
+                comparison = 1;
+            } else if (itemA < itemB) {
+                comparison = -1;
+            }
+            return comparison;
+        }
+
 
         const lobs = JSON.parse(sessionStorage.getItem('qq.catalyst-lobs'));
 
@@ -25,7 +39,7 @@ export default class LobCellRenderer extends Component {
             const reqPromise = axios.get(`${env.AUTH_ROOT_URL}/catalyst-lobs`, {headers});
             reqPromise.then((r) => {
                 const newState = {...this.state};
-                newState.lobs = r.data;
+                newState.lobs = r.data.sort(compare);
                 this.setState(newState, () => sessionStorage.setItem('qq.catalyst-lobs',  JSON.stringify(this.state.lobs)));
             });
         }else {
@@ -54,6 +68,7 @@ export default class LobCellRenderer extends Component {
                 {shouldSpin ? (
                     <FontAwesomeIcon icon="spinner" spin/>) : (
                     <select value={this.props.value} onChange={this.onChange}>
+                        <option key="null" value="null">Please Select</option>
                         {optionsList}
                     </select>
                 )}
