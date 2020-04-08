@@ -63,6 +63,7 @@
     <Folder Include="dbo\Synonyms\" />
     <Folder Include="_Sync" />
     <Folder Include="Assemblies\" />
+    <Folder Include="Security\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\MigrationTableStats.sql" />
@@ -149,6 +150,9 @@
     <Build Include="dbo\Tables\MigrationsActionDetails.sql" />
     <Build Include="dbo\Stored Procedures\App_Sel_MigrationsActionItems_MigrationID.sql" />
     <Build Include="dbo\Stored Procedures\App_Sel_MigrationsActionDetails_MigrationID.sql" />
+    <Build Include="Security\RoleMemberships.sql" />
+    <Build Include="Security\KrakenSvs.sql" />
+    <Build Include="Security\CLR_SP_Login.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_Sync\local.scmp" />
