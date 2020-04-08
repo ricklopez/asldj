@@ -15,7 +15,7 @@ RETURN
 		, STRING_AGG(p.NodeValue, ' ')															AS [Value]
 		, CAST(0 AS BIT)																		AS [Modified]
 	FROM dbo.Evolution_AcordDocumentParses p
-		INNER JOIN [dbo].[Evolution_AcordCrosswalk] cw 
+		INNER JOIN [MpmmDb].[dbo].[Evolution_AcordCrosswalk] cw 
 			ON cw.MigrationID = p.MigrationID
 			AND cw.Form1Name = p.DocumentName
 		INNER JOIN dbo.Evolution_AcordNodeCrosswalk ncw
