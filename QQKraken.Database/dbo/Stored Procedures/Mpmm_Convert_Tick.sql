@@ -8,7 +8,7 @@ DECLARE @MigrationID INT
 DECLARE db_cursor CURSOR FAST_FORWARD FOR 
 SELECT MigrationID
 FROM Migrations
-WHERE IsPhase1 = 1 AND IsPhase2 = 1 AND IsPhase3 = 0
+WHERE IsPhase1 = 1 AND IsPhase2 = 1 AND IsPhase3 = 1 AND IsPhase4 = 0
 
 OPEN db_cursor  
 FETCH NEXT FROM db_cursor INTO @MigrationID
@@ -18,7 +18,7 @@ BEGIN
 	EXEC dbo.App_Dts_Convert @MigrationID
 
 	UPDATE Migrations
-		SET IsPhase3 = 1
+		SET IsPhase4 = 1
 	WHERE MigrationID = @MigrationID
 
     FETCH NEXT FROM db_cursor INTO @MigrationID

@@ -32,7 +32,7 @@ RETURN
 		END AS [Value], 
 		CAST(0 AS BIT) AS Modified
 	FROM dbo.AcordPageOneBaseView(@MigrationID, @Acord_ID) bv
-		INNER JOIN [dbo].[Evolution_AcordCrosswalk] cw 
+		INNER JOIN [MpmmDb].[dbo].[Evolution_AcordCrosswalk] cw 
 			ON cw.MigrationID = @MigrationID
 			AND cw.Form1Name = bv.DocumentName
 		INNER JOIN dbo.Evolution_AcordNodeCrosswalk ncw
