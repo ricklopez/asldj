@@ -16,7 +16,7 @@ import LobCellRenderer from '../components/renderers/lobCellRenderer';
 import PeriodCellRenderer from '../components/renderers/periodCellRenderer';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
- 
+
 
 const columnsLOB = [
     { field: 'sourceLOB', headerName: 'Client LOB', sortable: true, filter: true },
@@ -52,7 +52,7 @@ class MigrationDetails extends Component {
         this.onTaskClick = this.onTaskClick.bind(this);
         this.onStandUp = this.onStandUp.bind(this);
         this.onExportDetailsClick = this.onExportDetailsClick.bind(this);
-        
+
     }
 
     componentDidMount() {
@@ -79,6 +79,18 @@ class MigrationDetails extends Component {
 
     onExportDetailsClick(event) {
         this.props.downloadActionItemDetailsData(this.props.migration, this.props.auth);
+    }
+
+    getStatus(){
+        const actions = ['standup', 'convert'];
+        const status = ['New Conversion', 'Ready for Mappings & Conversion', 'Conversion in Progress', 'Conversion Complete'];
+        const errors = false;
+        const {phase1, phase2, phase3, phase4, phase5, phase6} = this.props.migration;
+        const phases = [];
+        for(let i = 0; i <6; i++){
+           phases.push({name:'phase'+ (i+1), value: this.props.migration['phase'+ (i+1)] });
+        }
+       return phases.filter(p => p.value)
     }
 
     renderTasks() {
@@ -110,6 +122,7 @@ class MigrationDetails extends Component {
         if (!migration) {
             return <div> <img src={loadingImg} alt="loading" /> </div>;
         }
+        const currentStatus = this.getStatus();
         return (
             <div>
                 <AppHeader user={this.props.auth}></AppHeader>
@@ -286,10 +299,10 @@ class MigrationDetails extends Component {
                             </div>
                         </TabPanel>
                     </Tabs>
-                   
+
                         </div>
-                        
-                        
+
+
                         )
                         : (<div></div>)}
 
